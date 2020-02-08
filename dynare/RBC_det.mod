@@ -91,6 +91,7 @@ plot(0:50, Y1(1:51)); title('Y')
 subplot(2,2,3)
 plot(0:50, C1(1:51)); title('C')
 subplot(2,2,4)
+plot(0:50, K1(1:51)); title('K')
 
 figure(2)
 subplot(2,2,1)
