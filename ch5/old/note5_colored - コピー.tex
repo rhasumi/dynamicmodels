@@ -1,0 +1,994 @@
+\documentclass[fleqn, 12pt]{jsarticle}
+
+\usepackage{amsmath, amssymb, bm, ascmac}
+\usepackage[square]{natbib}
+\usepackage[dvips]{graphicx}
+\usepackage{multirow}
+\usepackage{fancybox,booktabs,braket}
+\usepackage[usenames]{color}
+
+\pagestyle{plain}
+\setlength{\mathindent}{2zw}
+\setlength{\topmargin}{-2\baselineskip}
+\setlength{\textheight}{34\baselineskip}
+\addtolength{\textheight}{\topskip}
+
+\setcounter{page}{63}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\renewcommand{\refname}{参考文献}
+\renewcommand{\abstractname}{Abstract}
+
+\bibliographystyle{jecon}
+
+\title{講義ノート5：\\ニューケインジアン・モデル}
+\date{\today}
+\author{蓮見 亮}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\vspace{2\baselineskip}
+
+ノート4でのRBCモデルの変数は全て実物変数であり、物価や政策金利といった名目変数は含まれないが、モデルに工夫を加えることで、そのような変数を内生化できる。ノート5では、物価を内生化する方法の1つであるMIU（Money In the Utility）モデルと、より一般的な、現在では最もメジャーなマクロ経済モデルの1つとなったニューケインジアン・モデルを紹介する。
+
+\section{MIUモデル}
+
+MIUモデルは、RBCモデルの効用関数の引数（ひきすう）である消費、労働に実質貨幣保有を加えることで構成できる。単純化のために、ここでは資本ストックのない消費財のみが存在するモデルを想定しよう。
+
+\subsection{モデルのセットアップ}
+
+代表的家計の生涯効用関数を
+\begin{equation}
+U_t = \sum_{i=0}  \beta^{i} \left[\ln({C}_{t+i})-\mu {L}_{t+i}^{\gamma+1}+b \ln \left(\frac{{M}_{t+i}}{{P}_{t+i}}\right)\right] \label{miuutil}
+\end{equation}
+としよう。すなわち、家計は消費$C_t$の効用と労働$L_t$の不効用に加えて、実質貨幣保有$\frac{M_t}{P_t}$から効用を得るものとする。分母の$M_t$は名目貨幣保有、分子の$P_t$は消費財1単位の価格であり一般物価を意味する。貨幣は、中央銀行により供給されるものとする。労働1単位当たりの名目賃金を$W_t$とし、代表的家計は、所得として労働$L_t$を供給することで労働所得$W_t L_t$を得るものとする。家計は、所得を消費$C_t$と貨幣保有$M_t$と債券保有$B_t$のいずれかに振り分けるものとする。債券保有$B_t$は名目建てで、名目金利$i_t$の利回りとし、名目貨幣保有$M_t$には利子がつかないものとする。
+このとき、$t$期の予算制約は、
+\begin{equation}
+P_t C_t + M_t + B_t = W_t L_t + M_{t-1} + (1+i_{t-1}) B_{t-1}
+\end{equation}
+と表される。右辺第1項は当期の労働による所得、第2項は前期の貨幣保有残高、第2項は前期の債券保有残高の元本と利子を表す。
+
+家計の異時点間の最適化問題は、
+\begin{equation}
+\begin{split}
+\max~~& U_t = \sum_{i=0}  \beta^{i} \left[\ln({C}_{t+i})-\mu {L}_{t+i}^{\gamma+1} +b \ln \left(\frac{{M}_{t+i}}{{P}_{t+i}}\right) \right] \\
+\textrm{s.t.}~~&\color{red} P_i C_i + M_i + B_i = W_i L_i + M_{i-1} + (1+i_{i-1}) B_{i-1},~i \ge t
+\end{split}
+\end{equation}
+と定式化できる\footnote{\color{red}添え字付きの$i_t$と$i$は全く別物であることに注意。}。
+$\lambda_t, \lambda_{t+1},\dots$をラグランジュ乗数とすると、
+ラグランジアンは
+\begin{equation}
+\begin{split}
+\Lambda = \sum_{i=t}  &\beta^{i-t} \biggl[\ln({C}_{i})-\mu {L}_{i}^{\gamma+1}+b \ln \left(\frac{{M}_{i}}{{P}_{i}}\right) \\
+&+ \lambda_{i} \Bigl\{W_i L_i + M_{i-1} + (1+i_{i-1}) B_{i-1} - P_i C_i - M_i - B_i \Bigl\} \biggl] 
+\end{split}
+\end{equation}
+と書ける。
+ラグランジアン$\Lambda$を$C_t, L_t, M_t, B_t$で偏微分しゼロと等号で結ぶことにより、最適化の一階条件が得られる。
+すなわち、
+\begin{equation}
+\frac{1}{{C}_{t}}-P_t {\lambda}_{t}  =0
+\label{eqmiuc1}
+\end{equation}
+\begin{equation}
+W_t{\lambda}_{t}-\mu \left( \gamma+1\right)  {L}_{t}^{\gamma}=0
+\label{eqmiuc2}
+\end{equation}
+\begin{equation}
+\frac{b}{{M}_{t}}-{\lambda}_{t}=0
+\label{eqmiuc3}
+\end{equation}
+\begin{equation}
+\beta\left(1 + i_t \right) {\lambda}_{t+1}-{\lambda}_{t}=0
+\label{eqmiuc4}
+\end{equation}
+である。
+${\lambda}_{t} = \frac{1}{P_t C_t}$より(\ref{eqmiuc2})式、(\ref{eqmiuc3})式、(\ref{eqmiuc4})式から${\lambda}_{t},{\lambda}_{t+1}$を消去して整理すると、
+\begin{equation}
+\frac{W_t}{P_t C_t} = \mu \left( \gamma+1\right) {L}_{t}^{\gamma}
+\label{eqmiud1}
+\end{equation}
+\begin{equation}
+\frac{M_t}{P_t} = b C_t
+\label{eqmiud2}
+\end{equation}
+\begin{equation}
+\frac{P_{t+1} C_{t+1}}{P_t C_{t}}=\beta\left(1+i_t \right)
+\label{eqmiud3}
+\end{equation}
+である。
+(\ref{eqmiud1})式は消費と労働の代替関係を表す式、
+(\ref{eqmiud2})式が新たに登場した式で消費と貨幣保有の代替関係を表し、
+(\ref{eqmiud3})式はオイラー方程式である。
+
+次に、代表的企業の生産関数を
+\begin{equation}
+C_t = A_t {L}_{t} \label{eqmiuy}
+\end{equation}
+としよう。すなわち、企業は労働投入に比例する消費財を生産するとする。$A_{t}$は技術水準を意味する。消費財$C_t$の1単位あたりの価格が$P_t$なので、企業の利潤は
+\begin{equation}
+\Pi_t = P_t C_t - W_t L_t
+\end{equation}
+と表される。したがって、利潤最大化の一階条件は、
+\begin{equation}
+P_t A_t - W_t = 0 \label{eqmiuw}
+\end{equation}
+である。
+技術水準$A_{t}$は、技術ショック${\color{red}\varepsilon_t}$を外生変数とし、RBCモデルの場合と同様、以下のようなAR(1)過程
+\begin{equation}
+\ln \left( {A}_{t+1}\right) = \rho_A \ln \left({A}_{t}\right)+{\color{red}\varepsilon_{t+1}} \label{eqmiua}
+\end{equation}
+に従うものとする。
+
+中央銀行による名目貨幣供給は、以下のような過程
+\begin{equation}
+M_{t+1} = (1+\psi_{t+1}) M_{t} \label{eqmium}
+\end{equation}
+に従うものとする。ここで、$\psi_t$は貨幣供給の増加量を意味する。
+$\psi_t$は$\psi_{ss}$を定常状態とするAR(1)過程
+\begin{equation}
+\psi_{t+1}-\psi_{ss}=\rho_{\psi} \left(\psi_{t}-\psi_{ss}\right)+{\color{red}\upsilon_{t+1}} \label{eqmiuu}
+\end{equation}
+に従うものとしよう。${\color{red}\upsilon_{t}}$は貨幣供給ショックを表す。
+
+\subsection{モデルの全体と定常状態}
+
+モデルの全体を改めて整理しておこう。
+ただし、$P_t$はそのままでは内生変数として取り扱えないため、
+実質貨幣保有と実質賃金をそれぞれ
+$m_t = \frac{M_t}{P_t},~w_t = \frac{W_t}{P_t}$
+と定義し、物価上昇率を
+$\pi_t = \frac{P_{t}}{P_{t-1}}-1$
+と定義して置き換える。
+まず、オイラー方程式は、(\ref{eqmiud3})式より
+\begin{equation}
+(1+\pi_{t+1})\frac{C_{t+1}}{C_{t}}=\beta\left(1+i_t \right) \label{eqmiue3}
+\end{equation}
+である。
+実質貨幣需要は(\ref{eqmiud2})式より
+\begin{equation}
+m_t = b C_t \label{eqmiue2}
+\end{equation}
+である。(\ref{eqmiuy})式、(\ref{eqmiuw})式を利用して$L_t,\frac{W_t}{P_t}$を(\ref{eqmiud1})式から消去して整理すると、
+\begin{equation}
+1 = \mu \left( \gamma+1\right)  \left(\frac{C_t}{A_t} \right)^{\gamma+1} \label{eqmiue1}
+\end{equation}
+が得られる。
+実質貨幣供給は(\ref{eqmium})式より
+\begin{equation}
+(1+\pi_{t+1}) m_{t+1} = (1+\psi_{t+1}) m_{t} \tag{\ref{eqmium}'}
+\end{equation}
+で与えられる。
+技術水準と、貨幣供給増加率の遷移式を再掲すると
+\begin{equation}
+\ln \left( {A}_{t+1}\right) = \rho_A \ln \left({A}_{t}\right)+{\color{red}\varepsilon_{t+1}} \tag{\ref{eqmiua}'}
+\end{equation}
+\begin{equation}
+\psi_{t+1}-\psi_{ss}=\rho_{\psi} \left(\psi_{t}-\psi_{ss}\right)+{\color{red}\upsilon_{t+1}} \tag{\ref{eqmiuu}'}
+\end{equation}
+である。
+このMIUモデルは以上の6本の方程式からなり、
+内生変数は、表\ref{tab:miuendg}に示す同数の6個である。
+外{\color{red}生}変数は、技術ショック${\color{red}\varepsilon_t}$と貨幣供給ショック${\color{red}\upsilon_{t}}$の2個であり、
+パラメーターは、表\ref{tab:miupara}に示すとおりである。
+
+\begin{table}[t]
+ \begin{minipage}{0.35\hsize}
+  \begin{center}
+   \begin{tabular}{ll}
+   \toprule
+   $C_t$ & 消費\\
+   $i_t$ & 名目金利 \\
+   $A_t$ & 技術水準\\
+   $\pi_t$ & 物価上昇率\\
+   $m_t$ & 実質貨幣保有\\
+   $\psi_t$ & 実質貨幣保有の増加率\\
+   \bottomrule
+   \end{tabular}
+  \end{center}
+  \caption{内生変数}
+  \label{tab:miuendg}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \begin{center}
+   \begin{tabular}{ll}
+   \toprule
+   $\beta$ & 割引因子\\
+   $\mu$ & 労働の不効用の相対ウエイト\\
+   $\gamma$  & 労働供給の弾力性 \\
+   $\rho_A$ & AR(1)項の係数（技術水準）\\
+   $\rho_\psi$ & AR(1)項の係数（貨幣供給ショック）\\
+   $\psi_{ss}$ & $\psi_t$の定常均衡値\\
+   \bottomrule
+   \end{tabular}
+  \end{center}
+  \caption{パラメータ}
+  \label{tab:miupara}
+ \end{minipage}
+\end{table}
+
+定常状態における内生変数それぞれの値、つまり定常均衡値は、
+(\ref{eqmiue3})～(\ref{eqmiuu}')式の各内生変数を$C_t = C_{t+1} = C^*$といった具合に{\color{red}置き換える}ことによって得られる6本の連立方程式を解くことによって得られ、具体的には
+\begin{gather*}
+A^* = 1 \\
+C_t^* = \left [ \frac{1}{\mu(\gamma+1)} \right]^\frac{1}{\gamma+1}\\
+\pi^* = \psi^* = \psi_{ss} \\
+i^* = \frac{1-\beta+\psi_{ss}}{\beta} \\
+m^* = b \left [ \frac{1}{\mu(\gamma+1)} \right]^\frac{1}{\gamma+1}
+\end{gather*}
+である。
+
+このMIUモデルによるシミュレーション結果は、\ref{secnkm}節で説明するニューケインジアン・モデルによるそれと比較する形で\ref{secimp}節で示すことにする。
+
+\section{数学の準備（４）：積分（定積分）}
+
+\ref{sec:nkmmono}節の独占的競争モデルにおいて、積分を用いて説明する必要があるため、ここで積分の定義を与えておく。
+数学上、積分は和の極限として定義され、積分によって面積が定義される。
+
+\begin{itembox}[l]{定義：積分}
+関数$f: R \to R$が区間$[a,~b]$で有限の値を値をとるものとする。
+区間$[a,~b]$を
+$a = x_0 < x_1 < \cdots < x_n = b$なる$n$個の分点によって分割し、
+$\Delta x_i = x_i - x_{i-1}~~(i = 1,2,\cdots,n)$と定義する。
+それぞれの区間$[x_{i-1},~x_i]$の中から任意に一点$\xi_i$をとって和
+\begin{equation}
+S_n = \sum_{i=1}^{n} f(\xi_i) \Delta x_i
+\end{equation}
+をとる。
+$n$の数を大きくし$d(\Delta) = \max \Delta x_i$（$\Delta x_i$のうち最大のものを$d(\Delta)$として定義するという意味である）をゼロに近づけたとき、
+分割の方法と$\xi_i$の選び方によらず$S_n$がある実数$S$に収束する、
+すなわち
+\begin{equation}
+\lim_{d(\Delta) \to 0} \sum_{i=1}^{n} f(\xi_i) \Delta x_i = S
+\end{equation}
+のとき、 $f$は$[a,~b]$で積分可能であるといい、$S$を$f$の$[a,~b]$上での（リーマン）積分という。
+\end{itembox}
+
+特に、$\int$という記号を用いて
+\begin{equation}
+S = \int_a^b f(x) dx
+\end{equation}
+と表すことが多い。
+関数$f(x)$が区間$[a,~b]$で正の有限の値をとるとき、
+$x$-$y$平面において曲線$y = f(x)$と3つの直線$y = 0,~x = a,~x = b$に囲まれた部分の面積は$S = \int_a^b f(x) dx$として定義される（図\ref{fig:integ}）。
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=70mm]{./figs/integ.eps}
+  \end{center}
+  \caption{積分と面積：グレーの部分の面積が$S$}
+  \label{fig:integ}
+\end{figure}
+
+関数$f(x)$が区間$[a,~b]$で負の有限の値をとるときには、$S = \int_a^b f(x) dx$が負値のため符号を逆にした$-S$が面積として定義される。
+微分と積分には密接な関係があり、例えば、
+\begin{equation}
+\frac{d}{dt} \int_a^t f(x) dx = f(t)
+\end{equation}
+である。
+以下の説明では、積分が``和の極限''であることがポイントとなる。
+
+\section{独占的競争モデル} \label{sec:nkmmono}
+
+価格の粘着性をモデルに導入するために不可欠な理論モデルである
+独占的競争モデルについて予め詳細に説明しておこう。
+独占的競争モデルとは、財の供給者は多数存在するが、それぞれ他者と異なる財を生産するため、供給側が自由に価格を決定できるとするモデルである。
+
+
+家計の効用関数を具体的に
+\begin{equation}
+C = \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} \label{eqmonutil}
+\end{equation}
+としよう。このような形式の効用関数を一般にCES（Constant Elasticity of Substitution：{\color{red}代替の弾力性一定}）型効用関数と呼ぶ。
+積分で表すことからわかるように、経済には無限に多くの異なる種類の財が存在することを仮定している。
+
+(\ref{eqmonutil})式について理解を深めるため、
+積分の定義に立ち返り、いま経済には$n$種類の財$\{c_1, c_2,\dots,c_n \}$が存在するものとし、
+積分区間$[0,~1]$の分割は等間隔、すなわち分点のとり方を$\{0,\frac{1}{n},\frac{2}{n},\dots,\frac{n}{n} \}$としよう。
+このとき(\ref{eqmonutil})式は、
+\begin{equation}
+C = \left[ \lim_{n \to \infty} \sum_{j = 1}^n \frac{c_j^{\frac{\theta-1}{\theta}}}{n}\right]^{\frac{\theta}{\theta-1}} \label{eqmonutil2}
+\end{equation}
+のように極限を使って表現できる。
+
+財$c_j$の価格を$p_j$とすると、
+家計の効用最大化問題は、費用最小化問題として、
+\begin{align}
+\min_{\{c_j\}}~~ & \int_0^1 p_{j}c_{j}dj \\
+\textrm{s.t.}~~  & C - \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} = 0 
+\end{align}
+と定式化できる。ラグランジュ乗数を$\psi$とすると、
+ラグランジアンは
+\begin{equation}
+\Psi = \int_0^1 p_{j}c_{j}dj + \psi \left\{ C - \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} \right\} \label{eqmonPsi}
+\end{equation}
+{\color{red}と定義}できる。最適化の一階の条件は$\frac{\partial \Psi}{\partial c_j} = 0$、すなわち
+\begin{align}
+\begin{split}
+&\frac{\partial}{\partial c_j}\int_0^1 p_{j}c_{j}dj - \psi \frac{\partial}{\partial c_j} \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} = 0 \\
+\Leftrightarrow~& p_j - \psi \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{1}{\theta-1}} c_{j}^{-\frac{1}{\theta}} = 0 \\
+\Leftrightarrow~& p_j - \psi C^{\frac{1}{\theta}} c_{j}^{-\frac{1}{\theta}} = 0 
+\end{split}\notag \\
+\Leftrightarrow~& c_{j} = \left( \frac{p_j}{\psi} \right)^{-\theta} C
+ \label{eqmoncj}
+\end{align}
+である（すぐ後の補足を参照）。
+$c_{j} = \left( \frac{p_j}{\psi} \right)^{-\theta} C$を
+(\ref{eqmonutil})式に代入すると、
+\begin{equation}
+\begin{split}
+C &= \left[ \int_0^1 \left\{ \left( \frac{p_j}{\psi} \right)^{-\theta} C \right\}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} \\
+&= \left( \frac{1}{\psi} \right)^{-\theta} \left[ \int_0^1 {p_j}^{1-\theta} dj \right]^{\frac{\theta}{\theta-1}} C
+\end{split}
+\end{equation}
+で、これを$\psi$について解くと、
+\begin{equation}
+\psi = \left[ \int_0^1 {p_j}^{1-\theta} dj \right]^{\frac{1}{1-\theta}} \label{eqmonpsi}
+\end{equation}
+である。
+
+ところで、名目消費は$\int_0^1 p_j c_j dj$で定義でき、(\ref{eqmonutil})式と
+(\ref{eqmonpsi})式を用いると
+\begin{equation}
+\begin{split}
+\int_0^1 p_j c_j dj & = \int_0^1 \left[\left( \frac{p_j}{\psi} \right)^{-\theta} C\right] p_j dj \\
+& = \psi^\theta \int_0^1 {p_j}^{1-\theta} dj\,C \\
+& = \psi^\theta \psi^{1-\theta}C \\
+& = \psi C
+\end{split}
+\end{equation}
+なので、ラグランジュ乗数$\psi$は一般物価を表すことがわかる。
+{\color{red}また、集計された実質消費$C$の定義も(\ref{eqmonutil})式でよいことがわかる。}
+
+一方で、(\ref{eqmoncj})式の両辺の自然対数をとると、
+\begin{equation}
+\ln(c_j) = -\theta \ln \left(\frac{p_j}{\psi} \right) + \ln(C)
+\end{equation}
+で、$C$が一定として、$c_j,~p_j,~\psi$が$c'_j,~p'_j,~\psi'$に変化したとき、差分をとると
+\begin{equation}
+\ln(c_j')-\ln(c_j) = -\theta \left[\ln \left(\frac{p_j'}{\psi'} \right) - \ln \left(\frac{p_j}{\psi} \right) \right]
+\end{equation}
+である。
+$\ln \left(\frac{p_j}{\psi} \right)$は$p_j$の$\psi$からの乖離率を表し、$\ln(c_j')-\ln(c_j)$は$c_j$の変化率を表すので、
+$p_j$の一般物価からの乖離率の差に$-\theta$を掛けた値が$c_j$の変化率に等しいことを示している。言い換えると、財$c_j$に対する需要の価格弾性値が$\theta$であることを表している。(\ref{eqmonutil})式の効用関数がCES型と呼ばれるのは、この結果による。
+
+\subsubsection*{(\ref{eqmoncj})式についての補足}
+
+(\ref{eqmonutil2})式を導出したのと同じような表現を用いると、
+\begin{equation}
+\int_0^1 p_{j}c_{j}dj = \lim_{n \to \infty} \sum_{j = 1}^n \frac{p_j c_j}{n}
+\end{equation}
+と表せる。したがって、
+\begin{equation}
+\frac{\partial}{\partial c_j} \int_0^1 p_{j}c_{j}dj = \frac{\partial}{\partial c_j} \lim_{n \to \infty} \sum_{j = 1}^n \frac{p_j c_j}{n} =  \lim_{n \to \infty} \frac{p_j}{n}
+\end{equation}
+である。一方で、
+\begin{equation}
+X = \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj = 
+\lim_{n \to \infty} \sum_{j = 1}^n \frac{c_{j}^{\frac{\theta-1}{\theta}}}{n}
+\end{equation}
+と定義すると、合成関数の微分法により
+\begin{equation}
+\begin{split}
+\frac{\partial}{\partial c_j} X^\frac{\theta}{\theta-1}
+&= \frac{\partial X}{\partial c_j}\frac{\partial}{\partial X} X^\frac{\theta}{\theta-1} \\
+& = \left( \lim_{n \to \infty} \frac{1}{n} \frac{\theta-1}{\theta} c_{j}^{-\frac{1}{\theta}}\right) \left(\frac{\theta}{\theta-1} X^\frac{1}{\theta-1} \right)
+\end{split}
+\end{equation}
+である。これらの結果を合わせると、(\ref{eqmoncj})式の1行目は、
+\begin{equation}
+\begin{split}
+&\lim_{n \to \infty} \frac{1}{n} \left( p_j - 
+\psi  X^\frac{1}{\theta-1} c_{j}^{-\frac{1}{\theta}} \right) = 0 \\
+\Leftrightarrow~& p_j - \psi X^\frac{1}{\theta-1} c_{j}^{-\frac{1}{\theta}} = 0
+\end{split}
+\end{equation}
+と書き換えることができ、これに$X$を代入し直すと(\ref{eqmoncj})式の2行目が得られる。
+
+
+
+%\begin{equation}
+%W \ge \int_0^1 p_{j}c_{j}dj
+%\end{equation}
+%とする。このとき、家計の効用最大化問題は、費用最小化問題として、
+%\begin{align}
+%\max_{\{c_j\}}~~ & \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} \\
+%\textrm{s.t.}~~   &W - \int_0^1 p_{j}c_{j}dj = 0
+%\end{align}
+%と定式化できる。ラグランジュ乗数を$\lambda$とすると、
+%ラグランジアンは
+%\begin{equation}
+%\Lambda = \left[ \int_0^1 c_{j}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} +  \lambda \left[ W - \int_0^1 p_{j}c_{j} dj \right]
+%\end{equation}
+%とできる。最適化の一階の条件は$\frac{\partial \Lambda}{\partial c_j} = 0$、すなわち
+%%\begin{equation}
+%%
+%%\end{equation}
+
+
+\section{ニューケインジアン・モデル} \label{secnkm}
+
+独占的競争モデルと後述のCalvo型価格設定モデルを組み合わせることで、
+MIUモデルのように貨幣をモデルに導入しなくとも、物価を内生化することができる。代表的企業は必ずしも毎期価格を改定できないという仮定、すなわち価格が硬直性、非伸縮性を有するという仮定をおくことで、ニューケインジアン・モデルにおける物価は粘着性を示すようになる。
+簡単化のため、ここでは消費財のみ存在する（ただし、それぞれの企業が生産する消費財は差別化されている）モデルとするが、投資、資本ストックをモデルに導入したとしても本質的な部分には違いはない。
+
+\subsection{モデルのセットアップ}
+
+\subsubsection*{代表的家計}
+
+代表的家計の生涯効用関数をRBCモデルの効用関数と、独占的競争モデルの効用関数を組み合わせた
+\begin{gather}
+U_t = \sum_{i = 0} \beta^i \left[\ln \left(C_{t+i} \right) - \mu L_{t+i}^{\gamma+1} \right] \\
+C_t = \left[ \int_0^1 c_{j,t}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}}
+\end{gather}
+としよう。
+このとき、代表的家計の最適化行動は、2段階に分かれる。
+家計は、第1段階で当期の消費$C_t$の大きさに依存することなく
+費用を最小化するように当期の消費に占める企業$j$の生産する$c_{j,t}$の割合を決め、第2段階で異時点の予算制約に基づき当期の消費$C_t$を決定する。
+
+まず、第1段階での費用最小化行動は財$c_{j,t}$の価格を$p_{j,t}$とすると、
+\begin{align}
+\min_{\{c_{j,t}\}}~~ & \int_0^1 p_{j,t}c_{j,t}dj \\
+\textrm{s.t.}~~  & C_t - \left[ \int_0^1 c_{j,t}^{\frac{\theta-1}{\theta}}dj \right]^{\frac{\theta}{\theta-1}} = 0 
+\end{align}
+と定式化できる。したがって、\ref{sec:nkmmono}節の結果をそのまま利用すると、
+一般物価$P_t$と財$c_{j}$に対する$t$期の需要$c_{j,t}$は、それぞれ
+\begin{gather}
+P_t = \left[ \int_0^1 p_{j,t}^{1-\theta} dj \right]^{\frac{1}{1-\theta}} \label{eqnkmpt1} \\
+c_{j,t} = \left( \frac{p_{j,t}}{P_t} \right)^{-\theta} C_t \label{eqnkmcj}
+\end{gather}
+と表される。
+
+労働1単位当たりの名目賃金を$W_t$とし、代表的家計は、所得として労働$L_t$を供給することで労働所得$W_t L_t$を得て、その所得を消費$C_t$と債券保有$B_t$のいずれかに振り分けるものとする。債券保有$B_t$は名目建てで、名目金利$i_t$の利回りとする。
+名目金利$i_t$は、以下で説明するように中央銀行の金融政策により決定されるものとする。
+このとき、$t$期の予算制約は、
+\begin{equation}
+P_t C_t + B_t = W_t L_t + (1+i_{t-1}) B_{t-1}+{d}_{t}
+\end{equation}
+と表される。RBCモデル、MIUモデルの場合と異なり、${d}_{t}$という項が加わるが、${d}_{t}$は独占的競争によって生じる企業利潤の家計への移転を意味する。企業が家計によって所有されていることが仮定されているためである。
+ただし、以下の展開からもわかるように、家計の最適化行動には影響しない項である。
+
+したがって、家計の第2段階での効用最大化行動は、
+\begin{align}
+\max~~ & \sum_{i=0}^\infty \beta^i \left[\ln \left(C_{t+i} \right) - \mu L_{t+i}^{\gamma+1} \right] \\
+\textrm{s.t.}~~  &\color{red} P_i C_i + B_i = W_i L_i + (1+i_{i-1}) B_{i-1}+{d}_{i},~i \ge t
+\end{align}
+と定式化できる。
+$\lambda_{t}$をラグランジュ乗数とすると、ラグランジアンは、
+\begin{equation}
+\begin{split}
+\Lambda = \sum_{j=t} \beta^{i-t} \biggl[\ln({C}_{i})-\mu {L}_{i}^{\gamma+1}- \lambda_{i} \Bigl\{W_i L_i + (1+i_{i-1})B_{i-1}- P_i C_i - B_i +{d}_{i} \Bigl\} \biggl]
+\end{split}
+\end{equation}
+と定義できる。ラグランジアン$\Lambda$を$C_t, L_t, B_t$で偏微分しゼロと等号で結ぶことにより、最適化の一階条件が得られる。
+すなわち、
+\begin{equation}
+\frac{1}{{C}_{t}}-{\lambda}_{t}=0 \label{eqnkmfo1}
+\end{equation}
+\begin{equation}
+\frac{{W}_{t} {\lambda}_{t}}{{P}_{t}}-\mu \left( \gamma+1\right) {L}_{t}^{\gamma} =0 \label{eqnkmfo2}
+\end{equation}
+\begin{equation}
+\frac{\beta \left( {i}_{t}+1\right) {\lambda}_{t+1}}{{P}_{t+1}}-\frac{{\lambda}_{t}}{{P}_{t}}=0 \label{eqnkmfo3} 
+\end{equation}
+が最適化の一階条件である。
+
+\subsubsection*{企業―Calvo型価格設定}
+
+財$c_{j,t}$を生産する企業$j$の生産関数を
+\begin{equation}
+c_{j,t} = A_t L_{j,t} \label{eqnkmprod1}
+\end{equation}
+としよう。$A_t$は各企業に共通する技術水準であり、
+これを所与として企業$j$は労働投入$L_{j,t}$に比例する生産$c_{j,t}$を行う。
+労働投入1単位に対する名目賃金は$W_t$なので、
+費用最小化行動は
+\begin{align}
+\min_{L_{j,t}}~~ & {\color{red}\frac{W_t L_{j,t}}{P_t}}\\
+\textrm{s.t.}~~  & c_{j,t} = A_t L_{j,t} \label{eqnkmcmin}
+\end{align}
+と定式化できる。
+$\varphi_t$をラグランジュ乗数とすると
+ラグランジアンは、
+\begin{equation}
+\Phi_t = {\color{red} \frac{W_t L_{j,t}}{P_t}}  + \varphi_t(c_{j,t}-A_t L_{j,t}) \label{eqnkmvphi}
+\end{equation}
+と定義でき、一階の条件は$\frac{\partial \Phi_t}{\partial L_{j,t}} = 0$、
+すなわち
+\begin{equation}
+\varphi_t = \frac{W_t}{A_t P_t} \label{eqnkmvphi2}
+\end{equation}
+である。ここで、生産1単位あたりの名目の平均費用は
+\begin{equation}
+\frac{W_t L_{j,t}}{c_{j,t}} = \frac{W_t}{A_t} \label{eqnkmvphi3}
+\end{equation}
+で表されるので、$\varphi_t$は生産1単位あたりの実質の平均費用を表す\footnote{
+ラグランジュ乗数は、多くの場合単なる変数ではなく、経済学的な意味で明確な意味を持つ。例えば、(\ref{eqmonPsi})式のラグランジュ乗数$\psi$は、一般物価を表していた。
+(\ref{eqnkmcmin})式のように生産関数を制約条件として企業の費用最小化行動を定式化すると、一般にラグランジュ乗数は企業の限界費用を表す。コブダグラス型生産関数や(\ref{eqnkmprod1})式のような生産量が労働投入に比例する生産関数の場合、企業が最適化行動をとるときには、限界費用は平均費用に一致する。}。
+
+企業は独占的競争下では、他者と異なる財を生産するため価格を自由に決定できるが、
+毎期価格改定できるわけではなく、ある一定の確率で$t$期に価格改定できるものとする
+（Calvo型価格設定モデル）。
+価格改定できない確率を$\omega$とする（つまり$1-\omega$を価格改定できる確率とする）。企業は、もし当期に価格改定できるとすると、次に価格改定できるまでの利潤の割引現在価値を最大にするように当期の価格を決定すると考えられる。
+次に価格改定できるまでの利潤の$t$期における割引現在価値は、当期の企業の販売価格を$p_{j,t}$とすると、以下の
+\begin{equation}
+\begin{split}
+\Theta_{j,t} &= \sum_{i=0}^{\infty}  \frac{\omega^i}{\prod_{k=1}^i (1+i_{t+k})} \left( p_{j,t} - P_{t+i} \varphi_{t+i} \right) c_{j,t+i} \label{eqnkmvtheta1}
+\end{split}
+\end{equation}
+を最大化することによって最大化される\footnote{$\prod_{k=1}^0(1+i_{t+k})=1$とする。}。
+$p_{j,t}$が販売価格、$P_{t+i} \varphi_{t+i}$が$t+1$期における名目の平均費用（(\ref{eqnkmvphi2})式、(\ref{eqnkmvphi3})式を参照）、$c_{j,t+i}$が販売数量であるため、$( p_{j,t} - P_{t+i} \varphi_{t+i} ) c_{j,t+i}$は$t$期から$t+i$期まで企業が価格を改定できなかった場合の$t+i$期の利潤を表す。$i=1$とし、(\ref{eqnkmcj})式の結果を利用すると、
+\begin{equation}
+\omega \frac{ ( p_{j,t} - P_{t+1} \varphi_{t+1} )} {1+i_{t+1}}\left( \frac{p_{j,t}}{\color{red}P_{t+1}} \right)^{-\theta} C_{t+1} + (1-\omega) \frac{( p_{j,t+1} - P_{t+1} \varphi_{t+1} )} {1+i_{t+1}}\left( \frac{p_{j,t+1}}{P_{t+1}} \right)^{-\theta} C_{t+1}
+\end{equation}
+が$t+1$期の利潤の現在価値の期待値（平均）である。すなわち、第1項が来期に価格改定できなかった場合（これは確率$\omega$で起こる）の現在価値、第2項が来期に価格改定できた場合の現在価値（これは確率$1-\omega$で起こる）を表す。ところが、第2項の$p_{j,t+1}$は企業が当期に価格$p_{j,t}$をいくらに決めるかによらず、自由に決めることができる。すなわち、第2項は企業が当期に価格$p_{j,t}$をいくらに決めるかには無関係であるため、無視できる\footnote{数学的な言葉で言い直すと、割引現在価値を$p_{j,t}$で偏微分すると第2項はゼロになるため、無視できる。}。
+$t+2$期、$t+3$期…についても同様に考えてゆくと、結局上記で定義した$\Theta_{j,t}$を最大化することによって企業の利潤の割引現在価値が最大になる。
+
+(\ref{eqnkmvtheta1})式に(\ref{eqnkmcj})式の結果を代入すると、
+\begin{equation}
+\begin{split}
+\Theta_{j,t} &= \sum_{i=0}^{\infty}  \frac{\omega^i}{\prod_{k=1}^i (1+i_{t+k})} \left( p_{j,t} - P_{t+i} \varphi_{t+i} \right)
+\left( \frac{p_{j,t}}{P_{t+i}} \right)^{-\theta} C_{t+i} \\
+&= \sum_{i=0}^{\infty}  \frac{\omega^i P_{t+i}}{\prod_{k=1}^i (1+i_{t+k})} \left( \frac{p_{j,t}}{P_{t+i}} - \varphi_{t+i} \right)
+\left( \frac{p_{j,t}}{P_{t+i}} \right)^{-\theta} C_{t+i}
+\end{split}  \label{eqnkmvtheta2}
+\end{equation}
+となるが、
+(\ref{eqnkmfo1})式、(\ref{eqnkmfo3})式より、
+\begin{equation}
+\frac{1}{1+i_t} \frac{P_{t+1}}{P_t} = \beta \left( \frac{C_t}{C_{t+1}} \right)
+\label{eqnkmeuler}
+\end{equation}
+なので（オイラー方程式）、両辺を$t$から$t+i$まで掛け合わせることにより、
+\begin{equation}
+\begin{split}
+&\frac{1}{\prod_{k=0}^i (1+i_{t+k})}\frac{P_{t+i}}{P_t} = \beta^i \left( \frac{C_t}{C_{t+i}} \right) \\
+\Leftrightarrow ~& \frac{P_{t+i}}{\prod_{k=1}^i (1+i_{t+k})} = \beta^i \left( \frac{C_t}{C_{t+i}} \right) (1+i_t) P_t
+\end{split}
+\end{equation}
+が得られる。
+したがって、(\ref{eqnkmvtheta2})式は、
+\begin{equation}
+\begin{split}
+\Theta_{j,t} &= (1+i_t)P_t \sum_{i=0}^{\infty} \omega^i  \beta^i \left( \frac{C_t}{C_{t+i}} \right) \left( \frac{p_{j,t}}{P_{t+i}} - \varphi_{t+i} \right)
+\left( \frac{p_{j,t}}{P_{t+i}} \right)^{-\theta} C_{t+i}\\
+&= (1+i_t)P_t C_t \sum_{i=0}^{\infty} \omega^i  \beta^i \left[\left( \frac{p_{j,t}}{P_{t+i}}\right)^{1-\theta} - \varphi_{t+i} 
+\left( \frac{p_{j,t}}{P_{t+i}} \right)^{-\theta} \right]
+\end{split}
+\end{equation}
+と書き換えられる。$\Theta_{j,t}$を$p_{j,t}$で偏微分しゼロと等号で結ぶと、
+\begin{equation}
+(1+i_t)P_t C_t \sum_{i=0}^{\infty} \omega^i  \beta^i \left[(1-\theta)  \frac{ p_{j,t}^{-\theta}}{P_{t+i}^{1-\theta}} + \theta \varphi_{t+i} \frac{ p_{j,t}^{-\theta-1}}{P_{t+i}^{-\theta}}\right] = 0 \label{eqnkmvthetaopt1}
+\end{equation}
+という一階の条件が得られる。
+(\ref{eqnkmvthetaopt1})式は、当期に価格改定できる企業にとって共通の条件であるため添え字$j$を取って$\tilde{p}_t$を最適な価格とし、整理すると、
+\begin{equation}
+\begin{split}
+& \sum_{i=0}^{\infty} \omega^i  \beta^i  (\theta-1) \frac{ \tilde{p}_t^{-\theta}}{P_{t+i}^{1-\theta}} = \sum_{i=0}^{\infty} \omega^i  \beta^i \theta \varphi_{t+i} \frac{\tilde{p}_t^{-\theta-1}}{P_{t+i}^{-\theta}} \\
+\Leftrightarrow ~& (\theta-1) \sum_{i=0}^{\infty} \omega^i  \beta^i P_{t+i}^{\theta-1}= \frac{\theta}{\tilde{p}_t} \sum_{i=0}^{\infty} \omega^i  \beta^i \varphi_{t+i} P_{t+i}^{\theta}
+\\
+\Leftrightarrow ~& \tilde{p}_t \sum_{i=0}^{\infty} \omega^i  \beta^i P_{t+i}^{\theta-1}= \frac{\theta}{\theta-1} \sum_{i=0}^{\infty} \omega^i  \beta^i \varphi_{t+i} P_{t+i}^{\theta}
+\end{split} \label{eqnkmvthetaopt2}
+\end{equation}
+で、両辺を$P_t^\theta$で割ってさらに整理すると、
+\begin{equation}
+\begin{split}
+& \frac{\tilde{p}_t}{P_t} \sum_{i=0}^{\infty} \omega^i  \beta^i \left(\frac{P_{t+i}}{P_t}\right)^{\theta-1}= \frac{\theta}{\theta-1} \sum_{i=0}^{\infty} \omega^i  \beta^i \varphi_{t+i} \left(\frac{P_{t+i}}{P_t}\right)^{\theta} \\
+\Leftrightarrow ~& \frac{\tilde{p}_t}{P_t} = \left( \frac{\theta}{\theta-1} \right)
+\frac{\sum_{i=0}^{\infty} \omega^i \beta^i \varphi_{t+i}^{\theta}}
+{\sum_{i=0}^{\infty} \omega^i \beta^i (P_{t+i}/P_t)^{\theta-1}}
+\end{split} \label{eqnkmoptp}
+\end{equation}
+となる。
+ここで
+\begin{equation}
+F_t = \sum_{i=0}^{\infty} \omega^i \beta^i \varphi_{t+i}\left(\frac{P_{t+i}}{P_t}\right)^{\theta} \label{eqnkmft0}
+\end{equation}
+と定義すると、
+\begin{align}
+\begin{split}
+F_t &= \varphi_{t} + \sum_{i'=1}^{\infty} \omega^{i'} \beta^{i'} \varphi_{t+{i'}}\left(\frac{P_{t+{i'}}}{P_t}\right)^{\theta}\\
+&= \varphi_{t} + \sum_{i=0}^{\infty} \omega^{i+1} \beta^{i+1} \varphi_{t+{i}+1}\left(\frac{P_{t+{i}+1}}{P_t}\right)^{\theta}\\
+&= \varphi_{t} + \omega \beta \left(\frac{P_{t+1}}{P_{t}}\right)^{\theta} \sum_{i=0}^{\infty} \omega^{i} \beta^{i} \varphi_{t+1+i}\left(\frac{P_{t+1+i}}{P_{t+1}}\right)^{\theta}
+\end{split} \notag \\
+&= \varphi_{t} + \omega \beta \left(\frac{P_{t+1}}{P_{t}}\right)^{\theta} F_{t+1} \label{eqnkmft}
+\end{align}
+という漸化式が得られる（1行目から2行目へは$i = i'-1$という置き換えをした）。
+同様に、
+\begin{equation}
+Z_t = \sum_{i=0}^{\infty} \omega^i \beta^i \left(\frac{P_{t+i}}{P_t}\right)^{\theta-1} \label{eqnkmzt0}
+\end{equation}
+と定義すると、
+\begin{equation}
+Z_t = 1 + \omega \beta \left(\frac{P_{t+1}}{P_{t}}\right)^{\theta-1} Z_{t+1} \label{eqnkmzt}
+\end{equation}
+である。(\ref{eqnkmoptp})式自体は
+\begin{equation}
+\frac{\tilde{p}_t}{P_t} = \frac{\theta}{\theta-1} \frac{F_t}{Z_t} \label{eqnkmoptp2}
+\end{equation}
+と表される。
+一方で、(\ref{eqnkmpt1})式より
+\begin{equation}
+P_t^{1-\theta} = \int_0^1 p_{j,t}^{1-\theta} dj \label{eqnkmpt}
+\end{equation}
+であるが、当期において$\tilde{p}_t$に価格改定できる企業の割合が$1-\omega$、前期の価格のままで据え置かれる企業の割合が$\omega$であること、および積分が和の極限であることより、
+\begin{equation}
+\begin{split}
+P_t^{1-\theta} &= \int_0^1 \left[ (1-\omega)\tilde{p}_t^{1-\theta} +\omega p_{j,t-1}^{1-\theta} \right] dj \\
+&= (1-\omega) \int_0^1 \tilde{p}_t^{1-\theta} dj + 
+\omega \int_0^1 p_{j,t-1}^{1-\theta}dj \\
+& = (1-\omega) \tilde{p}_t^{1-\theta} + \omega P_{t-1}^{1-\theta}
+\end{split} \label{eqnkmpt2}
+\end{equation}
+と表すことができる。
+
+\subsubsection*{金融政策ルール}
+
+名目金利は、金融政策ルールの一種であるTaylorルールに従うものとしよう
+\footnote{念のため付言しておくと、テイラー展開のテイラーとはまったく別物である。テイラー展開は18世紀初頭のイギリスの数学者ブルック・テイラーの功績である。}。
+金融政策ルールとは、物価や経済成長の安定化を目的として、マクロ経済の変動に応じて機械的に金融政策を運営する方式を数式により表現したものである。
+$i_t$を名目金利、$i^*$を名目金利の定常均衡値（自然利子率）、$\pi_t = \frac{P_{t}}{P_{t-1}}-1$を物価上昇率、$Y_t,\color{red} Y_t^f$をそれぞれ実質GDPと景気中立的なGDPの水準とすると、Taylorルールのもとでは、中央銀行は政策金利を
+\begin{equation}
+i_t = i^* + \phi_{\pi} \pi_t + \phi_{y} \ln \left(\frac{Y_t}{Y_t^f} \right)
+\label{eqnkmpl0}
+\end{equation}
+という式から決定する。
+Taylorルールの係数は、中央銀行が何を目的関数として金融政策を実行するかによって変わる。どのようなルールが最適であるかという議論には立ち入らないが、
+オリジナルのTaylorルールのパラメータは$\phi_{\pi} = 1.5,~\phi_{y} = 0.5$である。
+右辺第2項は、足許のインフレ率の大小に応じて政策金利を景気中立的な水準、すなわち$i^*$からどの程度引き上げるか、引き下げるかをを表している\footnote{ここではインフレ目標$\color{red} \pi^T$はゼロとしており、ゼロでない場合を含む一般的な書き方をすると、
+\begin{equation}
+i_t = i^* + \phi_{\pi} (\pi_t-\pi^T) + \phi_{y} \ln \left(\frac{Y_t}{Y_t^f} \right)
+\end{equation}
+となる。}。
+第3項は、
+\begin{equation}
+\ln \left(\frac{Y_t}{Y_t^f} \right) = \ln \left( 1 + \frac{Y_t-Y_t^f}{Y_t^f}\right) \simeq \frac{Y_t-Y_t^f}{Y_t^f}
+\end{equation}
+で、GDPの景気中立的な水準からの乖離率の大小に応じて、政策金利をどの程度調整するかを表している。
+
+ここで、景気中立的なGDPの水準をどこに置くかが問題になるが、ここでは仮に価格が伸縮的、つまり$\omega = 0$の場合のGDPの水準を景気中立的なGDPの水準としよう。
+$\omega = 0$のとき、(\ref{eqnkmvthetaopt2})式より
+\begin{equation}
+\tilde{p}_t P_t^{\theta-1} = \frac{\theta}{\theta-1} \varphi_t P_t^\theta
+\end{equation}
+が企業にとっての利潤最大化条件になる。
+価格が伸縮的な場合には、毎期全ての企業が同じ価格に設定することから、$\tilde{p}_t = P_t$であり、このとき、
+\begin{equation}
+\varphi_t = \varphi^f = \frac{\theta-1}{\theta}
+\end{equation}
+が利潤最大化条件になる。
+
+{\color{red}(\ref{eqnkmvphi2})式より$\frac{W_t}{P_t} = A_t \varphi_t$、生産関数より$L_t = \frac{C_t}{A_t}$なので、これらを(\ref{eqnkmfo3})式に代入すると
+\begin{equation}
+\frac{A_t \varphi_t}{C_t}-\mu \left( \gamma+1\right) \left(\frac{C_t}{A_t} \right)^{\gamma}  =0 \label{eqnkmphit}
+\end{equation}
+という技術と平均費用の関係を表す式が得られる。}
+$\varphi_t = \varphi^f$のときの$C_t$を$C_t^f$と書くことにすると、(\ref{eqnkmphit})式より
+\begin{equation}
+\begin{split}
+C_t^f &= A_t \left [\mu (\gamma+1) \varphi^f \right]^\frac{1}{\gamma+1}
+&= A_t C^* \label{eqnkmacst}
+\end{split}
+\end{equation}
+である\footnote{\color{red}$C^*$は消費$C_t$の定常均衡値である。\ref{nkm:subsec:ss}節で$C^* = \left[\frac{\theta-1}{\mu (\gamma+1) \theta} \right]^\frac{1}{\gamma+1}$であることを確認する。}。
+消費財のみ存在するこのモデルでは、GDPは消費に等しいため（つまり$Y_t = C_t$）、
+この$C_t^f$が価格が伸縮的な場合のGDPの水準となる。
+
+ここでは、(\ref{eqnkmpl0})式の$Y_t,\color{red}Y_t^f$をそれぞれ$C_t,~C_t^f = A_t C^*$で置き換え、さらに外生の金融政策ショック$v_t$を付加した
+\begin{equation}
+i_t = i^* + \phi_{\pi} \pi_t + \phi_{y} \ln \left(\frac{C_t}{A_t C^*} \right) + v_t \label{eqnkmpl}
+\end{equation}
+をモデル式として用いることにする。
+金融政策ショックは、AR(1)過程
+\begin{equation}
+v_{t+1} = \rho_v v_{t} + {\color{red}u_{t+1}} \label{eqnkmvt}
+\end{equation}
+に従うものとする。
+
+\subsubsection*{財市場の均衡と技術水準の遷移式}
+
+マクロの生産関数は、(\ref{eqnkmprod1})式より
+\begin{equation}
+C_t = A_t L_t \label{eqnkmprod2}
+\end{equation}
+である。
+技術水準$A_{t}$は、技術ショック${\color{red}\varepsilon_t}$を外生変数とし、
+\begin{equation}
+\ln \left( {A}_{t+1}\right) =\rho_A \ln \left({A}_{t}\right)+{\color{red}\varepsilon_{t+1}} \label{eqnkmat}
+\end{equation}
+という過程に従うものとする。
+%(\ref{eqnkmvphi})式より$\frac{W_t}{P_t} = A_t \varphi_t$、生産関数より$L_t = \frac{C_t}{A_t}$なので、これらを(\ref{eqnkmfo3})式に代入すると
+%\begin{equation}
+%\frac{A_t \varphi_t}{C_t}-\mu \left( \gamma+1\right) \left(\frac{C_t}{A_t} \right)^{\gamma}  =0 \label{eqnkmphit}
+%\end{equation}
+%という技術と平均費用の関係を表す式が得られる。
+
+\subsection{モデルの全体と定常均衡値} \label{nkm:subsec:ss}
+
+MIUモデルと同様、$P_t$はそのままでは内生変数として取り扱えないため、
+上記で定義した物価上昇率$\pi_t$をモデル変数とする。
+オイラー方程式は、(\ref{eqnkmeuler})式を$\pi_t$を使って表現すると
+\begin{equation}
+(1+\pi_{t+1}) \frac{C_{t+1}}{C_{t}}=\beta\left(1+i_t \right) \label{eqnkmeuler2}
+\end{equation}
+である。
+同じ理由で、$\tilde{p}_t$についても$\tilde{\pi}_t = \frac{\tilde{p}_t}{P_{t-1}}-1$をモデル変数とする。
+物価を決める式は、(\ref{eqnkmoptp2})式の変数を置き換えた
+\begin{equation}
+\frac{1+\tilde{\pi}_t}{1+\pi_t} = \frac{\theta}{\theta-1} \frac{F_t}{Z_t} \label{eqnkmoptp3}
+\end{equation}
+と、$F_t$と$Z_t$の漸化式
+\begin{equation}
+F_t = \varphi_{t} + \omega \beta (1+\pi_{t+1})^\theta F_{t+1} \tag{\ref{eqnkmft}'}
+\end{equation}
+\begin{equation}
+Z_t = 1 + \omega \beta (1+\pi_{t+1})^{\theta-1} Z_{t+1} \tag{\ref{eqnkmzt}'}
+\end{equation}
+と(\ref{eqnkmpt2})式の変数を置き換えた
+\begin{equation}
+(1+\pi_t)^{1-\theta} = (1-\omega) (1+\tilde{\pi}_t)^{1-\theta} + \omega \label{eqnkmpt3}
+\end{equation}
+の4本である。
+名目金利を決めるTaylorルールと金融政策ショックの遷移式を再掲すると
+\begin{equation}
+i_t = i^* + \phi_{\pi} \pi_t + \phi_{y} \ln \left(\frac{C_t}{A_t C^*} \right) + v_t \tag{\ref{eqnkmpl}'}
+\end{equation}
+\begin{equation}
+v_{t+1} = \rho_v v_{t} + {\color{red}u_{t+1}} \tag{\ref{eqnkmvt}'}
+\end{equation}
+である。
+技術ショックの遷移式は
+\begin{equation}
+\ln \left( {A}_{t+1}\right) =\rho_A \ln \left({A}_{t}\right)+{\color{red}\varepsilon_{t+1}} \tag{\ref{eqnkmat}'}
+\end{equation}
+であり、技術と平均費用の関係を表す(\ref{eqnkmphit})式を変形すると、
+\begin{equation}
+\varphi_t = \mu \left( \gamma+1\right) \left(\frac{C_t}{A_t} \right)^{\gamma+1} \label{eqnkmphit2}
+\end{equation}
+である。このニューケインジアン・モデルは以上の9本の方程式からなり、
+内生変数は表\ref{tab:nkmendg}に示す同数の9個である。
+外{\color{red}生}変数は、技術ショック${\color{red}\varepsilon_t}$と貨幣供給ショック$u_{t}$の2個であり、
+パラメーターは、表\ref{tab:nkmpara}に示すとおりである。
+
+\begin{table}[t]
+ \begin{minipage}{0.45\hsize}
+  \begin{center}
+   \small
+   \begin{tabular}{ll}
+    \toprule
+    $C_t$ & 消費\\
+    $\varphi_t$ & 平均費用\\
+    $\pi_t$ & $P_t/P_{t-1}-1$\\
+    $\tilde{\pi}_t$ & $\tilde{p}_t/P_{t-1}-1$\\
+    $F_t$& (\ref{eqnkmft0})式で定義\\
+    $Z_t$& (\ref{eqnkmzt0})式で定義\\
+    $A_t$ & 技術水準\\
+    $i_t$ & 名目金利 \\
+    $v_t$& 金融政策ルールの誤差項\\
+    \bottomrule
+    \end{tabular}
+  \end{center}
+  \caption{内生変数}
+  \label{tab:nkmendg}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \begin{center}
+   \small
+   \begin{tabular}{ll}
+   \toprule
+   $\beta$ & 割引因子\\
+   $\mu$ & 労働の不効用の相対ウエイト\\
+   $\gamma$  & 労働供給の弾力性 \\
+   $\omega$ & 価格改定できない確率 \\
+   $\theta$ & 需要の価格弾性値\\
+   $\phi_{\pi}$ & 金融政策ルールの係数（物価） \\
+   $\phi_{y}$ & 金融政策ルールの係数（GDPギャップ） \\
+   $\rho_A$ & AR(1)項の係数（技術ショック）\\
+   $\rho_v$ & AR(1)項の係数（金融政策ショック）\\
+   \bottomrule
+   \end{tabular}
+  \end{center}
+  \caption{パラメータ}
+  \label{tab:nkmpara}
+ \end{minipage}
+\end{table}
+
+定常状態における内生変数それぞれの値、つまり定常均衡値は、
+(\ref{eqnkmeuler2})～(\ref{eqnkmphit2})式の各内生変数を$C_t = C_{t+1} = C^*$といった具合に置き換えてることによって得られる9本の連立方程式を解くことによって得られ、具体的には
+\begin{gather*}
+\pi^* = \tilde{\pi}^* = v^* = 0  \\
+i^* = \frac{1-\beta}{\beta} \\
+Z^* = \frac{1}{1-\omega \beta} \\
+F^* = \frac{\theta-1}{\theta(1-\omega \beta)} \\
+\varphi^* = \frac{\theta-1}{\theta}\\
+A^* = 1 \\
+C^* = \left[\frac{\theta-1}{\mu (\gamma+1) \theta} \right]^\frac{1}{\gamma+1}
+\end{gather*}
+である。
+
+%$e_t$ 技術ショック（外生）
+%$\varepsilon_t$ 金融政策ショック（外生）
+%以下では、$\Pi_{t+1} = \frac{P_{t+1}}{P_t}$と定義する。$\pi_{t+1} = \Pi_{t+1}-1$は、$t+1$期の物価上昇率に等しい。
+%()式と()式の右辺が等しいので、これらを等号で結んで整理すると、
+
+\section{インパルス応答} \label{secimp}
+
+この節では、MIUモデルとニューケインジアン・モデルの外生変数にそれぞれショックを加えることにより内生変数がどのように反応するかシミュレーションすることで、それぞれのモデルにどのような特徴があるのか比較してみよう。
+
+\subsection{パラメーターの設定} \label{subsecnkmpara}
+
+シミュレーションに先立ち、パラメータを設定しておく必要がある。
+まず、両方のモデルに共通するパラメータは、
+$\beta = 0.99,~\mu = 1,~\gamma = 1,~\rho_A = 0.9$とそれぞれおく。
+ニューケインジアン・モデルのみのパラメータは
+$\omega = 0.8,~\theta = 4,~\phi_\pi = 1.5,~\phi_y = 0.5,~\rho_v = 0.9$
+とおき、
+MIUモデルのみのパラメータについては
+$b = 0.1,~\rho_\psi = 0.9,~\psi_{ss} = 0$とおく\footnote{\color{red}。ニューケインジアン・モデルに対しては、現実のデータから尤もらしいパラメータを推定できるが（脚注\ref{ft:nkm:dsge}も参照）、ここではモデルの一般的な挙動を確認するという目的から、このような仮設のパラメータを用いる。}。
+
+
+\subsection{シミュレーション結果}
+
+両方のモデルにおいて、$t = 1$で$+5$\%の技術ショックが起こった場合のインパルス応答を定常均衡値からの乖離で表すと図\ref{fig:nkm_miu_techs}のようになる。
+実線がニューケインジアン・モデルのインパルス応答を、点線がMIUモデルのインパルス応答を表す。
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=120mm]{./figs/nkm_miu_techs.eps}
+  \end{center}
+  \caption{技術ショックに対するインパルス応答（定常均衡値からの乖離率（$\pi_t,i_t$は乖離幅）、単位\%）：実線がニューケインジアン・モデルのインパルス応答を、点線がMIUモデルのインパルス応答を表す}
+  \label{fig:nkm_miu_techs}
+\end{figure}
+
+まず指摘できるのが、物価上昇率$\pi_t$がニューケインジアン・モデルとMIUモデルで逆に動くということである。
+ニューケインジアン・モデルでは、正の技術ショックにより企業の生産コストが下落するため、価格改定できる企業は販売価格を下げようとする。そのため、物価上昇率$\pi_t$が下落する。これに対して、MIUモデルでは生産、消費の増加によって実質貨幣需要が増えるが、名目貨幣供給は一定である。{\color{red}したがって、}実質貨幣需要の変化は、物価上昇によって吸収される。
+
+名目金利の動きも両方のモデルで大きく異なる。MIUモデルでは、名目金利$i_t$の変化幅がゼロであることから、実質貨幣需要の変化が物価上昇率のみに吸収され、他の変数に影響しないことがわかる。一方、ニューケインジアン・モデルでは、Taylorルールに従い物価の下落に対応して名目金利は下落する。
+
+次に、ニューケインジアン・モデルにおいて$t = 1$で$+5$\%の金融政策ショックが、MIUモデルにおいて$t = 1$で$-5$\%の貨幣供給ショックが起こったときのインパルス応答を定常均衡値からの乖離で表すと図\ref{fig:nkm_miu_techs}のようになる。数値上の正負は逆であるが、どちらも金融引締めを意味する。
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=120mm]{./figs/nkm_miu_ms.eps}
+  \end{center}
+  \caption{金融政策ショック、貨幣供給ショックに対するインパルス応答（定常均衡値からの乖離率（$\pi_t,i_t$は乖離幅）、単位\%）：実線がニューケインジアン・モデルのインパルス応答を、点線がMIUモデルのインパルス応答を表す}
+  \label{fig:nkm_miu_ms}
+\end{figure}
+
+一見して明らかなように、ニューケインジアン・モデルでは正の金融政策ショックにより消費、生産が下落するが、MIUモデルでは貨幣供給ショックが実体経済に全く影響を及ぼさない\footnote{ニューケインジアン・モデルでは、正の金融政策ショックにより$i_t - \pi_{t+1}$で定義される実質金利が上昇するが、Taylorルールに従う名目金利は下落する。実質金利については、\ref{subsecnkmlogl}節の議論も参照。}。MIUモデルでは、名目貨幣供給の変化は全て物価上昇と名目金利の上昇に吸収され、消費、生産と実質貨幣保有には全く変化しない。
+
+%この結果は、消費、物価の下落が同時に起こると、外部からは正の金融政策ショックとして識別されることを意味する。
+
+MIUモデルに関するこれらの結果は、古典派の二分法で説明できる。
+技術水準・技術ショック、消費・生産、実質貨幣保有を実質変数、貨幣供給ショック、名目金利を名目変数と分類すると、実質変数である技術ショックは実質変数のみに影響を与え、名目変数である貨幣供給ショックは、名目変数のみに影響を与える。実は、効用関数に工夫を加えると実質変数と名目変数間が相互作用するようにもできるが、そもそも、仮定として家計はなぜ実質貨幣保有から効用を得るのか疑問があり、適切な{\color{red}関数型}が定まるわけではない。
+
+MIUモデルにおいて、ショックのほとんどを物価上昇率が吸収してしまうのは、物価が伸縮的、非粘着的で即座に価格調整が行われてしまうためである。
+名目貨幣供給量によって物価水準が決定されるという貨幣数量説は長期の理論とされるが、MIUモデルでは、それが短期でも起こることになる。
+これに対して物価に粘着性を導入したニューケインジアン・モデルでは、
+物価水準が瞬時に調整されるわけではない。物価水準の調整の過程で、例えば正の技術ショックが起こった場合には物価が下落することになる。
+
+ニューケインジアン・モデルは、MIUモデルと比較すると格段に複雑であるが、価格の硬直性を仮定することにより、Taylorルールのような尤もらしい金融政策ルールを最適成長モデルに組み込むことが可能にした。これにより、例えば、中央銀行の金融政策の最適ルールが理論的に分析可能になった。
+さらには、ニューケインジアン・モデルを用いて実際にどのようなルールで金融政策が行われていたのかを明らかにするために、Taylorルールのパラメータ$\phi_\pi,\phi_Y$をその他のパラメータも含めて同時に統計的に推定するという実証分析も多く行われている\footnote{
+このような実証分析に用いられるニューケインジアン・モデルは、
+DSGE（Dynamic Stochastic General Equilibrium）モデルと呼ばれる。\label{ft:nkm:dsge}}。
+
+\section{補論：モデルの対数線型化}
+
+ニューケインジアン・モデルのようなやや複雑なモデルに対して、対数線型化（対数線型近似）という操作を行うとモデルが簡単になり、変数相互間の関係がより直感的に把握できるようになる。
+
+\subsection{対数線型化$\spadesuit$}
+
+対数線型化の対数化とは、プラスの値のみをとる変数$X_t$を
+$\bar{X}_t = \ln(X_t) \Leftrightarrow \exp(\bar{X}_t) = X_t$と変数変換する操作を意味し、線型化とはモデルの各方程式を定常状態の周りで一次のテイラー展開することによる一次近似を意味する\footnote{対数化の目的は、定常均衡値からの乖離が大きくなった際の近似精度を良くするためである。}。
+物価上昇率や金利については、$\bar{\Pi}_t = \ln(1+\pi_t),~\bar{I}_t = \ln(1+i_t)$と1を加えてから変数変換する。
+オイラー方程式(\ref{eqnkmeuler2})を例にとると、まず変数変換により
+\begin{equation}
+\exp(\bar{\Pi}_{t+1}) \exp(\bar{C}_{t+1} - \bar{C}_t) - \beta \exp(\bar{I}_t) = 0
+\end{equation}
+となり、左辺は$f(\bar{C}_{t+1}, \bar{C}_{t}, \bar{\Pi}_{t+1}, \bar{I}_t)$と書ける。これを$\bar{C}_{t+1}=\bar{C}_{t}=\bar{C}^*=\ln(C^*),~\bar{\Pi}_{t+1}=\ln(1+\pi\*)=0,~\bar{I}_{t}=\bar{I}^*=\ln(1+i^*)=-\ln(\beta)$の周りでテイラー展開して0と等号で結ぶと、
+\begin{equation}
+\begin{split}
+&\bar{\Pi}_{t+1} + (\bar{C}_{t+1}-\bar{C}^*) - (\bar{C}_{t}-\bar{C}^*)
+- \beta \exp(\bar{I}^*) (\bar{I}_{t}-\bar{I}^*) = 0 \\
+\Leftrightarrow ~& \ln(1+\pi_{t+1}) + [\ln(C_{t+1}) - \ln(C^*)] - [\ln(C_{t}) - \ln(C^*)]\\
+&~~~~~~
+ - [\ln(1+i_{t}) - \ln(1+i^*)] = 0 
+\end{split}
+\end{equation}
+で、$\ln(1+\pi_{t+1}) \simeq \pi_t$といった近似をすると、
+\begin{equation}
+\pi_{t+1} + [\ln(C_{t+1}) - \ln(C^*)] - [\ln(C_{t}) - \ln(C^*)] - (i_t - i^*) = 0 
+\end{equation}
+となる。さらに、$\hat{c}_{t+1}= \ln(C_{t+1}) - \ln(C^*),~\hat{c}_{t} = \ln(C_{t}) - \ln(C^*),~\hat{i}_t = i_t - i^*$という変数を定義して置き換えると、
+\begin{equation}
+\pi_{t+1} + \hat{c}_{t+1} - \hat{c}_{t} - \hat{i}_t = 0 \label{eqnkmlneuler}
+\end{equation}
+と簡単になる。$\hat{c}_{t+1}, \hat{c}_{t}$は消費の定常状態からの乖離率を、$\hat{i}_t$は名目金利の定常状態からの乖離差を表す。
+
+(\ref{eqnkmoptp3})～(\ref{eqnkmpt3})式を対数線型近似すると
+\begin{gather}
+\tilde{\pi}_t - \pi_t = \hat{F}_t - \hat{Z}_t \label{eqnkmloglp1} \\
+\pi_t = (1-\omega) \tilde{\pi}_t \label{eqnkmloglp2} \\
+\hat{F}_t = (1-\omega \beta) \hat{\varphi}_t + \omega \beta \left(\theta \pi_{t+1} + \hat{F}_{t+1} \right) \label{eqnkmloglp3} \\
+\hat{Z}_t = \omega \beta \left[(\theta-1)\pi_{t+1} + \hat{Z}_{t+1} \right] \label{eqnkmloglp4} 
+\end{gather}
+が得られる。(\ref{eqnkmloglp1})式に(\ref{eqnkmloglp3})式と(\ref{eqnkmloglp4})式を代入して整理すると、
+\begin{equation}
+\begin{split}
+\tilde{\pi}_t - \pi_t &= (1-\omega\beta)\hat{\varphi}_t + \omega\beta \pi_{t+1}+ \omega\beta (\hat{F}_{t+1} - \hat{Z}_{t+1}) \\
+&= (1-\omega\beta)\hat{\varphi}_t + \omega\beta \pi_{t+1}+ \omega\beta (\tilde{\pi}_{t+1} - \pi_{t+1}) \\
+&= (1-\omega\beta)\hat{\varphi}_t + \omega\beta \tilde{\pi}_{t+1}
+\end{split}
+\end{equation}
+で、さらに(\ref{eqnkmloglp2})式を用いて$\tilde{\pi}_t ~(= \frac{\pi_t}{1-\omega})$を消去すると、
+\begin{equation}
+\pi_t = \frac{(1-\omega)(1-\omega\beta )}{\omega} \hat{\varphi}_t + \beta \pi_{t+1} \label{eqnkmloglp5} 
+\end{equation}
+と整理できる。
+一方で、(\ref{eqnkmphit2})式を対数線型近似すると、
+\begin{equation}
+\hat{\varphi}_t = (\gamma + 1) (\hat{c}_t - \hat{a}_t)
+\end{equation}
+となる。ただし、$\hat{a}_t = \ln(A_t)$とおいた。
+(\ref{eqnkmacst})式を用いると、
+\begin{equation}
+\hat{c}_t - \hat{a}_t = \ln(C_t) - \ln(C^*) - \ln(A_t) = \ln(C_t) - \ln(C_t^f)
+\end{equation}
+なので、$\hat{c}-\hat{a}$は、$C_t$の、その価格が伸縮的な場合の水準$C_t^f$からの乖離率を表す。$\hat{x}_t = \hat{c}_t-\hat{a}_t$と$\kappa = \frac{(1-\omega)(1-\omega\beta)(\gamma+1)}{\omega}$という新しい変数とパラメータを定義して(\ref{eqnkmloglp5})式を書き直すと、
+\begin{equation}
+\pi_t = \beta \pi_{t+1} + \kappa \hat{x}_t \label{eqnkmpc}
+\end{equation}
+というニューケインジアン・フィリップス曲線（New Keynesian Phillips Curve）が得られる。
+
+一方で、線型対数近似したオイラー方程式(\ref{eqnkmlneuler})を$\hat{x}_t$と新たに定義する
+\begin{equation}
+\nu_t = \hat{a}_{t+1}-\hat{a}_{t} \label{eqnkmnu}
+\end{equation}
+を用いて表すと、
+\begin{equation}
+\hat{x_{t}} = \hat{x}_{t+1} - (\hat{i}_t-\pi_{t+1}) + \nu_t \label{eqnkmis}
+\end{equation}
+というニューケインジアンIS曲線（New Keynesian IS Curve）が得られる。
+同様に、Taylorルール(\ref{eqnkmpl})式を$\hat{x}_t$を用いて表すと、
+\begin{equation}
+\hat{i}_t = \phi_{\pi} \pi_t + \phi_{y} \hat{x}_t + v_t \label{eqnkmpl2}
+\end{equation}
+である。
+金融政策ショックの遷移式(\ref{eqnkmvt})の操作は不要で{\color{red}あ}る。最後に、
+技術ショックの遷移式(\ref{eqnkmat})を対数線型化すると、
+\begin{equation}
+\hat{a}_{t+1} =\rho_A \hat{a}_{t} +{\color{red}\varepsilon_{t+1}} \label{eqnkmat2}
+\end{equation}
+である。
+
+\subsection{対数線型化したニューケインジアン・モデル} \label{subsecnkmlogl}
+
+対数線型化したニューケインジアン・モデルは、
+\begin{gather}
+\pi_t = \beta \pi_{t+1} + \kappa \hat{x}_t \tag{\ref{eqnkmpc}'} \\
+\hat{x}_{t} = \hat{x}_{t+1} - (\hat{i}_t-\pi_{t+1}) + \nu_t \tag{\ref{eqnkmis}'} \\
+\hat{i}_t = \phi_{\pi} \pi_t + \phi_{y} \hat{x}_t + v_t \tag{\ref{eqnkmpl2}'} \\
+v_{t+1} = \rho_v v_{t} + {\color{red}u_{t+1}} \tag{\ref{eqnkmvt}''} \\
+\hat{a}_{t+1} =\rho_A \hat{a}_{t} +{\color{red}\varepsilon_{t+1}} \tag{\ref{eqnkmat2}'} \\
+\nu_t = \hat{a}_{t+1}-\hat{a}_{t} \tag{\ref{eqnkmnu}'}
+\end{gather}
+という6本の方程式からなる\footnote{$\ln(A_t) = \hat{a}_t,~\hat{x}_t = \hat{c}_t - \hat{a}_t = [\ln(C_{t+1}) - \ln(C^*)] - \hat{a}_t,~\hat{i}_t = i_t - i^*,~\kappa = \frac{(1-\omega)(1-\omega\beta)(\gamma+1)}{\omega}$という置き換えをしている。なお、対数線型化したモデルでは、パラメータ$\mu, \theta$が識別不可能になる。}。
+$\hat{x}_t$はGDP（このモデルでは消費に等しい）の景気中立的な水準からの乖離率を意味する。
+
+(\ref{eqnkmpc}')式はニューケインジアン・フィリップス曲線（New Keynesian Phillips Curve）、(\ref{eqnkmis}')式はニューケインジアンIS曲線（New Keynesian IS Curve）曲線と呼ばれる。例えば、(\ref{eqnkmpc}')式から、当期の物価上昇率は、1期先の物価上昇率$\pi_{t+1}$と当期の$\hat{x}_t$から決定されることがわかる。
+1期先の物価上昇率は期待物価上昇率でもあり、(\ref{eqnkmis}')式の右辺の$(\hat{i}_t-\pi_{t+1})$は、名目金利－期待物価上昇率であるから実質金利を意味する\footnote{正確には、$\hat{i}_t$は名目金利の定常状態からの乖離差であるから、$(\hat{i}_t-\pi_{t+1})$は実質金利の定常状態からの乖離差である。}。
+したがって、(\ref{eqnkmis}')式から実質金利の上昇は、$\hat{x}_t$の下落を引き起こす。
+
+(\ref{eqnkmpc}')～(\ref{eqnkmnu}')式からなるモデルは、線型近似に起因する誤差を除けば\ref{secnkm}節のモデルと同等である。したがって、このモデルを用いても
+図\ref{fig:nkm_miu_techs}、\ref{fig:nkm_miu_ms}とほぼ同様のインパルス応答が描ける。非線形のモデルは複雑なため、現実のデータからパラメータを統計的に推定する場合には、予めモデルを対数線型化しておく場合が多い。
+
+
+\footnote[0]{（章末脚注）このノートのモデルは、``Monetary Theory and Policy''（文献[7]）の2章、6章、8章を参考にした。最適金融政策について詳しくは、例えば『現代マクロ経済学講義』（文献[8]）の5章を参照していただきたい。}
+
+\end{document}
+
