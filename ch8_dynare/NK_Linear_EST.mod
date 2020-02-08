@@ -57,7 +57,7 @@ varobs x ppi ii;
 
 estimation(datafile='dset.mat', mh_replic=125000, mh_drop = 0.2, mh_nblocks=2, mh_jscale=0.6, mode_compute = 4, mode_check);
 
-chain1 = load(strcat('./NK_Linear_EST/metropolis/NK_Linear_EST_mh1_blck1.mat'))
+chain1 = load(strcat('./NK_Linear_EST/metropolis/NK_Linear_EST_mh1_blck1.mat'));
 chain2 = load(strcat('./NK_Linear_EST/metropolis/NK_Linear_EST_mh1_blck2.mat'));
 csvwrite('chain1.csv',chain1.x2, 1, 0);
 csvwrite('chain2.csv',chain2.x2, 1, 0);
