@@ -27,7 +27,7 @@ polygon(c(phi_y1, phi_y2, phi_y2, phi_y1, phi_y1), c(phi_pi1, phi_pi2, -1, -1, p
 box()
 
 text(1, 0.4, "indeterminate")
-text(1, 1.5, "deteminante")
+text(1, 1.5, "determinate")
 
 dev.copy2eps(file= figpath %+% "nkm_indet.eps")
 
