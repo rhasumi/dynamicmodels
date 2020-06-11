@@ -4,7 +4,7 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+figpath <- "../../"
 
 library(nleqslv)
 
@@ -19,17 +19,22 @@ At <- 1.0
 
 Kt <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))
 FCt <- function(K) At*K^alpha - delta*K
+Kmax <- (delta/At)^(1/(alpha-1))
 
 windows(7, 7)
 par(ps = 15)
 par(mai = c(0.85, 0.85, 0.35, 0.35))
-curve(FCt, 0, 8, ylim = c(0, 1), xlab = expression(K), ylab = expression(C))
+curve(FCt, 0, Kmax, ylim = c(0, 1), xlab = expression(K), ylab = expression(C))
 abline(h = 0)
+
 lines(cbind(c(Kt, Kt),c(0, 100)))
 points(Kt,FCt(Kt), pch=19)
 
 text(4, 0.4, expression(paste(Delta,K[t]," = 0",sep="")))
 text(2, 0.95, expression(paste(Delta,C[t]," = 0",sep="")))
+
+axis(1, labels = c(expression(K[max])), at = Kmax)
+segments(Kmax, -1, Kmax, 0, lty = 2)
 
 dev.copy2eps(file= figpath %+% "dcdk.eps")
 
