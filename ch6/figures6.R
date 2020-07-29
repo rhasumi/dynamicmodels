@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 xj <- function(n = 9){
   -cos(0.5*(2*(1:n)-1)*pi/n)
@@ -22,7 +23,7 @@ phi <- function(x, j) {
 }
 nodes <- seq(-1,1,length = 100)
 
-windows(7,2.5)
+if (.Platform$OS.type == "windows") windows(7,2.5)
 par(ps = 10, mai = c(0.85, 0.68, 0.68, 0.35)*0.5)
 plot(cbind(xj(),rep(0,9)),main = expression(z["i"]), xlab = "", ylab = "",axes = F)
 axis(1)
@@ -30,7 +31,7 @@ axis(2, labels = "", at = 0)
 box()
 dev.copy2eps(file= figpath %+% "chebnode.eps")
 
-windows(7,7)
+if (.Platform$OS.type == "windows") windows(7,7)
 par(mfrow = c(3,3), ps = 15, mai = c(0.85, 0.68, 0.68, 0.35)*0.5)
 
 ff <- function(x) phi(x, j=0)

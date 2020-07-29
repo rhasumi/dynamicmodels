@@ -4,7 +4,8 @@
 #==================================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 beta <- 0.99
 alpha <- 0.3
@@ -122,7 +123,7 @@ for(iter in 1:niter) {
 # Plot
 #---------------------------------------
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 20)
 par(mai = c(0.85, 1, 0.25, 0.1))
 plot(cbind(node, cc), typ = "l", xlab = expression(K[t]), ylab = expression(C[t]))

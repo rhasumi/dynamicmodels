@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 library(nleqslv)
 
@@ -103,7 +104,7 @@ rsltfun <- function(rslt, maxT, X0, Xss, p = para) {
 
 X1 <- rsltfun(rslt1, maxT, X0, ss)
 
-windows(7, 10)
+if (.Platform$OS.type == "windows") windows(7, 10)
 par(ps = 14)
 par(mfrow = c(4, 2))
 par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)
@@ -134,8 +135,7 @@ abline(h = 0, lty = 2, col = grey(0.5))
 
 dev.copy2eps(file= figpath %+% "rbc1.eps")
 
-windows(5*0.6, 3.55*0.6)
-#windows(5, 2)
+if (.Platform$OS.type == "windows") windows(5*0.6, 3.55*0.6)
 par(ps = 10*15/14)
 par(mai = c(0.85, 0.8, 0.68, 0.35)*0.5)
 plot(cbind(0:maxT, X1$s), xlim = c(0,50), typ = "l", main = expression(s[t]), xlab = "", ylab = "")

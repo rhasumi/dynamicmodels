@@ -8,7 +8,8 @@ library(xlsx)
 dset <- read.xlsx("FqReport1.xlsx", 1)
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 library(xtable)
 
@@ -78,7 +79,7 @@ Ystar <- kstar^alpha*A*L
 kest <- c(K0, Kest[-tmax])/A/L
 
 
-windows(10, 5)
+if (.Platform$OS.type == "windows") windows(10, 5)
 par(mfrow = c(1,2))
 par(ps = 15)
 par(mai = c(0.85, 0.68*0.75, 0.68*0.75, 0.35*1.5)*1)

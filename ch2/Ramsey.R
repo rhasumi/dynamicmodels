@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 library(nleqslv)
 
@@ -21,7 +22,7 @@ Kt <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))
 FCt <- function(K) At*K^alpha - delta*K
 Kmax <- (delta/At)^(1/(alpha-1))
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 15)
 par(mai = c(0.85, 0.85, 0.35, 0.35))
 curve(FCt, 0, Kmax, ylim = c(0, 1), xlab = expression(K), ylab = expression(C))

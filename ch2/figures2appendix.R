@@ -1,10 +1,11 @@
 #=======================================
 # Chapter 2, Figures of appendix
-#   modified on 2019/10/19
+#   modified on 2020/7/28
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 beta <- 0.99
 alpha <- 0.3
@@ -118,31 +119,6 @@ for(iter in 1:niter) {
   print(abs(c(cc) - c1))
 }
 
-#---------------------------------------
-# Plot
-#---------------------------------------
-
-#deltaK <- function(K) K^alpha - delta*K
-#y1 <- c()
-#for(i in 1:nt) 
-#  y1[i] <- deltaK(node[i])
-#
-#windows(7, 5)
-#par(mai = c(0.85, 0.88,0.85, 0.35))
-#par(ps = 15)
-#plot(cbind(node, cc), typ = "l", xlab = expression(K[t]), ylab = expression(C[t]), xlim = c(0,2.5), main = "Policy Function")
-#points(cbind(Kss, Css), pch = 19)
-#text(cbind(Kss+0.20, Css-0.1), expression(paste("(",K[ss],", ", C[ss],")")))
-#lines(cbind(node, y1), col = 2, lty = 2)
-#
-#legend(cbind(1.8, 1.4), legend = c(expression(paste(C[t]," = F(", K[t], ")")), expression(paste(Delta,K[t]," = 0"))), col = 1:2, lty = 1:2)
-#
-#text(cbind(0.5, 1.2), expression(paste(Delta,K[t]," < 0")), col = 2)
-#text(cbind(2.0, 0.4), expression(paste(Delta,K[t]," > 0")), col = 2)
-#
-# dev.copy2eps(file= figpath %+% "polit_ram_ct2.eps")
-
-
 #--------------------
 # シミュレーション
 #--------------------
@@ -169,20 +145,23 @@ for(i in 1:31) {
 #--------------------
 
 At <- 1
-Kt <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss
 FCt <- function(K) At*K^alpha - delta*K
 
 maxT <- 31
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 15)
 par(mai = c(0.85, 0.88, 0.35, 0.35))
 par(mfrow = c(1,1))
 #curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)
-curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)
+curve(FCt, 0, 3, ylim = c(0.3, 1.225), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)
 abline(h = 0)
-lines(cbind(c(Kt, Kt),c(0, 100)))
-points(Kt,FCt(Kt), pch=19)
+#lines(cbind(c(Kss, Kss),c(0, 100)))
+
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))
+points(Kss,FCt(Kss), pch=19)
 
 axis(2)
 axis(1, labels = c(0:3), at = 0:3)
@@ -204,30 +183,31 @@ for(i in 13:(maxT-1)){
 
 
 FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C
+const <- 1.06
 
 Kt1a <- K01
-Ct1a <- hc(K01)*1.05
+Ct1a <- hc(K01)*const
 for(i in 1:31) {
   Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])
   Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])
 }
 
 Kt1b <- K01
-Ct1b <- hc(K01)*0.95
+Ct1b <- hc(K01)/const
 for(i in 1:31) {
   Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])
   Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])
 }
 
 Kt2a <- K02
-Ct2a <- hc(K02)*1.05
+Ct2a <- hc(K02)*const
 for(i in 1:31) {
   Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])
   Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])
 }
 
 Kt2b <- K02
-Ct2b <- hc(K02)*0.95
+Ct2b <- hc(K02)/const
 for(i in 1:31) {
   Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])
   Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])
@@ -279,7 +259,6 @@ for(i in 1:maxT2){
     arrows(Kt3b[i], Ct3b[i], Kt3b[i+1], Ct3b[i+1], length = 0.05, col = 1, lty = 1)
 }
 
-text(Kss+0.07, Css+0.07, "F")
+text(Kss, Css+0.05, "F")
 
 dev.copy2eps(file= figpath %+% "phase_ram_ck.eps")
-

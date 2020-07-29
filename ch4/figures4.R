@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 A0 <- 1.0
 A1 <- 1.01
@@ -23,7 +24,7 @@ ans2 <- c(A0, ar1(rhos[2], A1, Len))
 ans3 <- c(A0, ar1(rhos[3], A1, Len))
 ans4 <- c(A0, ar1(rhos[4], A1, Len))
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(mfrow = c(2,2))
 par(ps = 15)
 par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)

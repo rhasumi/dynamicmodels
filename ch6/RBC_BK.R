@@ -4,7 +4,8 @@
 #==================================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 alpha <- 0.3
 beta <- 0.99

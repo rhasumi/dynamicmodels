@@ -4,7 +4,8 @@
 #==================================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 beta <- 0.99
 alpha <- 0.3
@@ -208,7 +209,7 @@ for (i in 2:nsim) {
     X[i+1, 3:4] <- g(X[i, 3:4], X[i, 1:2], 0)
 }
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 12, mai = c(0.85, 0.68, 0.68, 0.35)*0.3)
 persp(node[, 1], node[, 2], matrix(cc, nt, nt),
       theta = -30, phi = 30, expand = 0.5, ticktype = "detailed",

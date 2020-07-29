@@ -4,11 +4,12 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 fx <- function(x) sin(x)+1.5
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 18)
 par(mai = c(0.85, 0.85, 0.35, 0.35))
 curve(fx, -0.5, 4, ylim = c(0, 3), ylab = "y")
@@ -58,10 +59,6 @@ dev.copy2eps(file= figpath %+% "nkm_cia_techs.eps")
 
 nkm_mps <- read.csv("nkm_mps.csv")
 cia_mss <- read.csv("cia_mss.csv")
-
-#par(ps = 15)
-#par(mfrow = c(3, 2))
-#par(mai = c(0.85, 0.68, 0.68, 0.35*2)*0.5)
 
 plot(cbind(0:50, nkm_mps$C[1:51]), col = 4, main = expression(C[t]), xlab = "", ylab = "", typ = "l", ylim = c(-1, 0.25))
 lines(cbind(0:50, cia_mss$C[1:51]), col = 2, lty = 2)

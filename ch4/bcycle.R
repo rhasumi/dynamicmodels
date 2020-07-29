@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 dat <- read.csv("FqReport4.csv")
 
@@ -31,7 +32,7 @@ roh.ts <- ts(dat$ROH, start = 1980, frequency = 4)
 
 #---------
 
-windows(7, 4)
+if (.Platform$OS.type == "windows") windows(7, 4)
 par(ps = 13)
 par(mai = c(0.6, 0.85, 0.6, 0.35))
 plot(gap.ts, main = "", ylab = "%", xlab = "")

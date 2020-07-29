@@ -1,0 +1,1972 @@
+sample(1, 1:20)
+sample(1:20)
+sample(1:20, 1)
+%in% 1
+%in% 1:5
+2 %in% 1:5
+set.seed(111)
+rnorm(1)
+set.seed(111)
+rnorm(1)
+lik <- function(theta) {#
+  n <- 10; nh <- 5	#
+  theta^nh*(1-theta)^(n-nh)#
+}#
+curve(lik, 0, 1)#
+optimize(lik, 0, 1, maximize = T)
+curve(lik, 0, 1)#
+optimize(lik, c(0, 1), maximize = T)
+help(oprimize)
+help(optimize)
+optimize(lik, c(0, 1), maximum = T)
+"%+%" <- function(x, y) paste(x, y, sep = "")#
+figpath <- "../../figs/"#
+#
+library(nleqslv)#
+#
+#----------------------------------------#
+#
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT  <- 150#
+Xinit <- c(rep(1, maxT), rep(1, maxT), rep(1, maxT), rep(1, maxT))#
+#
+mt1 <- c(1,rep(1.01, maxT))#
+#
+rslt1 <- nleqslv(Xinit, objfun0, control=list(maxit=10^4))#
+print(rslt1)
+Xinit
+objfun0(Xinit)
+Xinit
+X<- Xinit
+nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)
+XX
+objfun1(X)
+objfun0(X)
+objfun0(Xinit)
+objfun1 <- function(X) objfun0(X)
+objfun1(Xinit)
+maxT1  <- 150#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))
+objfun0(Xinit)
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}
+objfun0(Xinit)
+maxT1  <- 150#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)
+XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)
+plot(pt)
+plot(st)
+plot(pt)
+plot(it)
+plot(ytd)
+maxT1  <- 300#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)
+plot(pt)
+plot(st)
+plot(ytd)
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+maxT1  <- 1000#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 1#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 1#
+nu <- 1#
+zeta <- 1#
+psi <- 1#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 1#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)
+XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.15#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.15#
+psi <- 5#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 10#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 200#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+xi <- 0.15#
+nu <- 0.15#
+zeta <- 0.02#
+psi <- 10#
+para <- list(xi=xi, nu=nu, zeta=zeta, psi=psi)#
+#
+#----------------------------------------#
+#
+#-------------------#
+# モデルの定義#
+#-------------------#
+#
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 400#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st, typ="l")#
+plot(pt, typ="l")#
+plot(it, typ="l")#
+plot(ytd, typ="l")
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(st[1:201], typ="l")#
+plot(pt[1:201], typ="l")#
+plot(it[1:201], typ="l")#
+plot(ytd[1:201], typ="l")
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st[1:201])*100, typ="l")#
+plot(log(pt[1:201])*100, typ="l")#
+plot(it[1:201]*100, typ="l")#
+plot(ytd[1:201]*100, typ="l")
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st[1:201])*100, typ="l",main=expression(s[t]))#
+abline(h=1, lyt=2)#
+plot(log(pt[1:201])*100, typ="l",main=expression(pi[t]))#
+abline(h=1, lyt=2)#
+plot(it[1:201]*100, typ="l",main=expression(it[t]))#
+abline(h=0, lyt=2)#
+plot(ytd[1:201]*100, typ="l",main=expression(y[t]^d))#
+abline(h=0, lyt=2)
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st[1:201])*100, typ="l",main=expression(s[t]))#
+abline(h=1, lty=2)#
+plot(log(pt[1:201])*100, typ="l",main=expression(pi[t]))#
+abline(h=1, lty=2)#
+plot(it[1:201]*100, typ="l",main=expression(it[t]))#
+abline(h=0, lty=2)#
+plot(ytd[1:201]*100, typ="l",main=expression(y[t]^d))#
+abline(h=0, lty=2)
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),ylim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),ylim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(it[t]),ylim=c(0,200))#
+abline(h=0, lty=2)#
+plot(ytd*100, typ="l",main=expression(y[t]^d),ylim=c(0,200))#
+abline(h=0, lty=2)
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(it[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(ytd*100, typ="l",main=expression(y[t]^d),xlim=c(0,200))#
+abline(h=0, lty=2)
+st[1:10]
+t=1
+st[t+1]-st[t]+it[t
+]
+st[t+1]-st[t]+it[t]
+st[t+1]-st[t]
+it[t
+]
+mt[t]-pt[t]
+mt1[t]-pt[t]
+mt1[t]
+pt[t]
+mt1[t]-pt[t]
+t=2
+mt1[t]-pt[t]
+it[t]
+objfun0 <- function(X, maxT=maxT1, mt=mt1, p = para) {#
+  nvar <- 4#
+  XX  <- matrix(X, maxT, nvar)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+  ret <- matrix(NA, maxT, nvar)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- mt[t]-pt[t]+p$psi*it[t]#
+    ret[t, 2] <- ytd[t]-p$nu*(st[t]-pt[t])+p$zeta*it[t]#
+    ret[t, 3] <- pt[t+1]-pt[t]-p$xi*ytd[t+1]#
+    ret[t, 4] <- st[t+1]-st[t]+it[t+1]#
+  }#
+  return(c(ret))#
+}#
+#
+#----------------------------------------#
+#
+maxT1  <- 400#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(it[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(ytd*100, typ="l",main=expression(y[t]^d),xlim=c(0,200))#
+abline(h=0, lty=2)
+windows(7,5)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(i[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(ytd*100, typ="l",main=expression(y[t]^d),xlim=c(0,200))#
+abline(h=0, lty=2)
+maxT1  <- 400#
+Xinit <- c(rep(1, maxT1), rep(1, maxT1), rep(1, maxT1), rep(1, maxT1))#
+#
+mt1 <- c(1,rep(1.01, maxT1))#
+#
+rslt1 <- nleqslv(Xinit, objfun1, control=list(maxit=10^4))#
+print(rslt1)#
+  XX  <- matrix(rslt1$x, maxT1, 4)#
+  pt   <- c(1,XX[, 1])#
+  st <- c(1,XX[, 2])#
+  ytd <- c(XX[, 3], 0)#
+  it <- c(XX[, 4], 0)#
+#
+#windows(7,5)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(i[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(log(mt1)*100, typ="l",main=expression(yt[t]),xlim=c(0,200))#
+abline(h=0, lty=2)
+#windows(7,5)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(i[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(log(mt1)*100, typ="l",main=expression(m[t]),xlim=c(0,200))
+#windows(7,5)#
+par(ps = 15)#
+par(mfrow = c(2, 2))#
+par(mai = c(0.85, 0.68, 0.68, 0.35)*0.5)#
+plot(log(st)*100, typ="l",main=expression(s[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(log(pt)*100, typ="l",main=expression(pi[t]),xlim=c(0,200))#
+abline(h=1, lty=2)#
+plot(it*100, typ="l",main=expression(i[t]),xlim=c(0,200))#
+abline(h=0, lty=2)#
+plot(ytd*100, typ="l",main=expression(y[t]^d),xlim=c(0,200))#
+abline(h=0, lty=2)
+library(xlsx)
+library(rjava)
+install.packages("rJava")
+library(rJava)
+library(rjava)
+library(rJava)
+uninstall.packages('rJava')
+help(installpackages)
+help(install.packages)
+library(rJava)
+uninstall.packages('rJava')
+install.packages('rJava')
+library(rJava)
+library(xlsx)
+207350*0.18
+0.633*4
+0.459*4
+6730/178
+N <- 100#
+K <- 2.1#
+p0 <- 2#
+delta <- 0.99975#
+u <- 1.0142#
+q <- 0.5053#
+price <- p0*u^seq(-2*N, 2*N, 1)#
+NP <- length(price)#
+V <- matrix(NA,NP,N+1)#
+V[, N+1] <- 0#
+for(i in seq(N, 1))#
+  for(j in 2:(NP-1))#
+     V[j, i] <- max(c(K-price[j], q*delta*V[j+1, i+1]+(1-q)*delta*V[j-1, i+1]))#
+price0 <- p0*u^seq(-N, N, 1)#
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1, 3), #
+   ylim = c(0, 2), main = "Vt")
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1, 3), #
+   ylim = c(0, 1.5), main = "", xant = "n")
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1, 3), #
+   ylim = c(0, 1.5), xlab = "", main = "", xaxt = "n")
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1, 3), #
+   ylim = c(0, 1.5), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)#
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1, 3), #
+   ylim = c(0, 1.5), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.5, 2.5), #
+   ylim = c(0, 1.5), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.5, 2.5), #
+    xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.5, 2.5), #
+   ylim = c(0, 0.8), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.7, 2.4), #
+   ylim = c(0, 0.6), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.7, 2.4), #
+   ylim = c(0, 0.4), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.7, 2.4), #
+   ylim = c(0, 0.45), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.8, 2.4), #
+   ylim = c(0, 0.45), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.8, 2.4), #
+   ylim = c(0, 0.4), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.8, 2.4), #
+   ylim = c(0, 0.35), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)#
+axis(side=2, labels=F)
+plot(cbind(price0, V[N+seq(1:length(price0)), 1]), typ = "l", xlim = c(1.8, 2.4), #
+   ylim = c(0, 0.35), xlab = "", main = "", xaxt = "n", yaxt = "n")#
+axis(side=1, labels=F)
+"%+%" <- function(x, y) paste(x, y, sep = "")#
+figpath <- "../../figs/"#
+#
+library(nleqslv)#
+#
+#----------------------------------------#
+#
+alpha <- 0.3#
+beta <- 0.99#
+delta <- 0.25#
+At <- 1.0#
+#
+#----------------------------------------#
+#
+Kt <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.85, 0.35, 0.35))#
+curve(FCt, 0, 8, ylim = c(0, 1), xlab = expression(K), ylab = expression(C))#
+abline(h = 0)#
+lines(cbind(c(Kt, Kt),c(0, 100)))#
+points(Kt,FCt(Kt), pch=19)#
+#
+text(4, 0.4, expression(paste(Delta,K[t]," = 0",sep="")))#
+text(2, 0.95, expression(paste(Delta,C[t]," = 0",sep="")))#
+#
+dev.copy2eps(file= figpath %+% "dcdk.eps")#
+#
+#----------------------------------------#
+#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+Css <- At*Kss^alpha - delta*Kss#
+#
+objfun0 <- function(X, maxT, X0, Xss = Css) {#
+  XX  <- matrix(X, maxT, 2)#
+  C   <- c(XX[, 1], Xss)#
+  K   <- c(X0, XX[, 2])#
+  ret <- matrix(NA, maxT, 2)#
+  for(t in 1:maxT) {#
+    ret[t, 1] <- C[t+1]/C[t]-beta*(alpha*At*K[t+1]^(alpha-1)-delta+1)#
+    ret[t, 2] <- K[t+1]-At*K[t]^alpha-(1-delta)*K[t]+C[t]#
+  }#
+  return(c(ret))#
+}#
+#
+maxT  <- 30#
+Xinit <- c(rep(Css,maxT), rep(Kss,maxT))#
+#
+#--------------------#
+# シミュレーション１#
+#--------------------#
+#
+K01 <- Kss*0.5#
+objfun1 <- function(X) objfun0(X, maxT, K01)#
+rslt1 <- nleqslv(Xinit, objfun1)#
+#
+rslt1x <- matrix(rslt1$x, maxT, 2)#
+#
+Ct1 <- c(rslt1x[, 1],  Css)#
+Kt1 <- c(K01, rslt1x[, 2])#
+#
+#--------------------#
+# シミュレーション２#
+#--------------------#
+#
+K02 <- Kss*2#
+objfun2 <- function(X) objfun0(X, maxT, K02)#
+rslt2 <- nleqslv(Xinit, objfun2)#
+#
+rslt2x <- matrix(rslt2$x, maxT, 2)#
+#
+Ct2 <- c(rslt2x[, 1],  Css)#
+Kt2 <- c(K02, rslt2x[, 2])#
+#
+#--------------------#
+# 作図#
+#--------------------#
+#
+par(ps = 15)#
+par(mai = c(0.85*0.75, 0.68*0.75, 0.68*0.75, 0.35*0.75))#
+par(mfrow = c(2,1))#
+plot(cbind(1:(maxT+1), Ct1), typ = "l", main = expression(C[t]), xlab = "", ylab = "")#
+plot(cbind(1:(maxT+1), Kt1), typ = "l", main = expression(K[t]), xlab = "", ylab = "")#
+#
+dev.copy2eps(file= figpath %+% "ramck.eps")#
+#
+par(ps = 15)#
+par(mai = c(0.85, 0.85, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+curve(FCt, 0, 3, ylim = c(0.5, 1.1), xlab = expression(K[t]), ylab = expression(C[t]))#
+abline(h = 0)#
+lines(cbind(c(Kt, Kt),c(0, 100)))#
+points(Kt,FCt(Kt), pch=19)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.1)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.1)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}
+94800*1.1
+15+86+27+1
+299+129+109-3
+534*103/100
+(534/532-1)*100
+(550.02/547-1)*100
+15+86+27+1
+299+129+109-3
+(534/532-1)*100
+(550.02/547-1)*100
+install.packages("devtools")#
+devtools::install_github("AndreaCirilloAC/updateR")
+install.packages("devtools")
+install.packages("devtools")#
+devtools::install_github("AndreaCirilloAC/updateR")
+library(updateR)
+updateR()
+updateR("9300iwao")
+123
+demo()
+getwd()
+read.csv()
+read.csv("file.csv")
+"%+%" <- function(x, y) paste(x, y, sep = "")#
+figpath <- "../../figs/"#
+#--------------------#
+# wÖAÎÖ#
+#--------------------#
+par(ps = 20)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+curve(exp, -3, 3)
+exit
+q()
+fliupu
+fliupd
+flipud
+flipud()
+44*13.5
+88*13.5
+88*13.5-2-811
+library(nleqslv)
+help(nleqslv)
+.libPaths()
+.libPaths()[1]
+.libPaths()[2]
+.libPaths("C:/Users/qazws/Onedrive/R/win-library/4.0")
+help(library)
+library(nleqslv, lib.loc=.libPaths()[1])
+library(nleqslv, lib.loc=.libPaths()[2])
+.libPaths()
+.libPaths("C:/Users/qazws/Onedrive/R/win-library/4.0")
+.libPaths()
+hel(.libPaths)
+help(.libPaths)
+.libPaths("C:/software/Rpackages")
+.libPaths()
+.libPaths("C:")
+.libPaths()
+install.packages("nleqslv", lib="C:/Users/qazws/Onedrive/rlib”)
+install.packages("nleqslv", lib="C:/Users/qazws/Onedrive/rlib")
+library(nleqslv)
+library(nleqslv, lib.loc=library(nleqslv, lib.loc=.libPaths()[2]))
+library(nleqslv, lib.loc="C:/Users/qazws/Onedrive/rlib")
+round(e-10)
+round(1e-10)
+round(1e-20)
+round(1e-3)
+round(1e-2)
+44200/60
+exp(0.134)
+0.134/log(2)
+exp(0.01)
+"%+%" <- function(x, y) paste(x, y, sep = "")#
+figpath <- "../../figs/"#
+#
+beta <- 0.99#
+alpha <- 0.3#
+delta <- 0.25#
+#
+Kss <- ((1/beta+delta-1)/alpha)^(1/(alpha-1))#
+Css <- Kss^alpha - delta*Kss#
+#
+U <- function (C) log(C)#
+g <- function (K, C) K^alpha + (1-delta)*K - C#
+#
+y <- 0#
+for(i in 0:200)#
+  y <- y + beta^i * U(Css)#
+#
+#---------------------------------------#
+# チェビシェフ近似補間（1次）#
+#---------------------------------------#
+#
+library(nleqslv) # nleqslv#
+#
+xj <- function(n = 10){#
+  -cos(0.5*(2*(1:n)-1)*pi/n)#
+}#
+#
+trans0 <- function(x, a = -1, b = 1) {#
+  y <- (x-a)/(b-a)*2-1#
+  y#
+}#
+#
+trans <- function(x, a = -1, b = 1) {#
+  y <- (x-a)/(b-a)*2-1#
+  y[which(y < -1)] <- -1#
+  y[which(y > 1)] <- 1#
+  y#
+}#
+#
+rev <- function(y, a = -1, b = 1) (y+1)*(b-a)*0.5+a#
+#
+fn <- function(x, cc, nt){#
+  size <- length(x)#
+  Tk <- matrix(1, size[1], 1)#
+  Tk <- cbind(Tk, x)#
+  for (k in 2:(nt-1))#
+    Tk <- cbind(Tk, 2*x*Tk[, k]-Tk[, k-1])#
+  Tk %*% cc#
+}#
+#
+cheb <- function(x, coef, a, b, n) {#
+  fn(trans(matrix(x, 1), a, b), coef, n) #
+}#
+#
+#---------------------------------------#
+# Policy Iteration#
+#---------------------------------------#
+#
+nt <- 40#
+at <- 0.05#
+bt <- 4.0#
+#
+node <- rev(xj(nt), at[1], bt[1])#
+apxfun <- function(x, coef) fn(trans(x, at, bt), coef, nt)#
+#
+niter <- 1000#
+eps <- 0.0001#
+#
+# initialization#
+f <- function (x) -45 + sqrt(x)#
+cc <- rep(0, nt)#
+v <- rep(0, nt)#
+coef <- rep(0, nt)#
+coef2 <- rep(0, nt)#
+#
+for(iter in 1:niter) {#
+  print(iter)#
+  v1 <- c(v)#
+  c1 <- c(cc)#
+  coef1 <- coef#
+  for(i in 1:nt) {#
+    obj <- function(ct) {#
+      st <- node[i]#
+      sa <- matrix(g(st,ct), 1)#
+      return(-U(ct)-beta*f(sa))#
+    }#
+    opt <- optimize(obj, c(0.001,  min((1 - delta) *node[i]+node[i]^alpha,bt*0.99)))#
+    cc[i] <- opt$minimum#
+  }#
+  fobj1 <- function(coef) cc - apxfun(node, coef)#
+  coef1 <- nleqslv(coef1, fobj1)$x#
+  hc <- function(x) cheb(x, coef1, at, bt, nt)#
+  for(i in 1:nt) {#
+    st <- node[i]#
+    ct <- max(min(hc(st), st), 0.001)#
+    y <- U(ct)#
+    for(k in 1:1000) {#
+       st <- g(st, ct)#
+       ct <- max(min(hc(st), st), 0.001)#
+       y <- y + beta^k * U(ct)#
+      }#
+    v[i] <- y#
+  }#
+  if (identical(abs(c(cc) - c1) < eps ,rep(T, nt))) break#
+  fobj2 <- function(coef) v - apxfun(node, coef)#
+  coef2 <- nleqslv(coef2, fobj2)$x#
+  f <- function(x) cheb(x, coef2, at, bt, nt)#
+  plot(cbind(node, v), typ = "l")#
+  print(abs(c(cc) - c1))#
+}#
+#
+#---------------------------------------#
+# Plot#
+#---------------------------------------#
+#
+#deltaK <- function(K) K^alpha - delta*K#
+#y1 <- c()#
+#for(i in 1:nt) #
+#  y1[i] <- deltaK(node[i])#
+##
+#windows(7, 5)#
+#par(mai = c(0.85, 0.88,0.85, 0.35))#
+#par(ps = 15)#
+#plot(cbind(node, cc), typ = "l", xlab = expression(K[t]), ylab = expression(C[t]), xlim = c(0,2.5), main = "Policy Function")#
+#points(cbind(Kss, Css), pch = 19)#
+#text(cbind(Kss+0.20, Css-0.1), expression(paste("(",K[ss],", ", C[ss],")")))#
+#lines(cbind(node, y1), col = 2, lty = 2)#
+##
+#legend(cbind(1.8, 1.4), legend = c(expression(paste(C[t]," = F(", K[t], ")")), expression(paste(Delta,K[t]," = 0"))), col = 1:2, lty = 1:2)#
+##
+#text(cbind(0.5, 1.2), expression(paste(Delta,K[t]," < 0")), col = 2)#
+#text(cbind(2.0, 0.4), expression(paste(Delta,K[t]," > 0")), col = 2)#
+##
+# dev.copy2eps(file= figpath %+% "polit_ram_ct2.eps")#
+#--------------------#
+# シミュレーション#
+#--------------------#
+#
+K01 <- Kss*0.5#
+Kt1 <- K01#
+Ct1 <- c()#
+#
+for(i in 1:31) {#
+  Ct1[i] <- hc(Kt1[i])#
+  Kt1[i+1] <- g(Kt1[i], Ct1[i])#
+}#
+#
+K02 <- Kss*2#
+Kt2 <- K02#
+Ct2 <- c()#
+for(i in 1:31) {#
+  Ct2[i] <- hc(Kt2[i])#
+  Kt2[i+1] <- g(Kt2[i], Ct2[i])#
+}#
+#
+#--------------------#
+# 位相図の作図#
+#--------------------#
+#
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1)) ###
+FKt <- At*K^alpha - (1-delta)*K - Kss ###
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)
+install.packages("nleqslv")
+"%+%" <- function(x, y) paste(x, y, sep = "")#
+figpath <- "../../figs/"#
+#
+beta <- 0.99#
+alpha <- 0.3#
+delta <- 0.25#
+#
+Kss <- ((1/beta+delta-1)/alpha)^(1/(alpha-1))#
+Css <- Kss^alpha - delta*Kss#
+#
+U <- function (C) log(C)#
+g <- function (K, C) K^alpha + (1-delta)*K - C#
+#
+y <- 0#
+for(i in 0:200)#
+  y <- y + beta^i * U(Css)#
+#
+#---------------------------------------#
+# チェビシェフ近似補間（1次）#
+#---------------------------------------#
+#
+library(nleqslv) # nleqslv#
+#
+xj <- function(n = 10){#
+  -cos(0.5*(2*(1:n)-1)*pi/n)#
+}#
+#
+trans0 <- function(x, a = -1, b = 1) {#
+  y <- (x-a)/(b-a)*2-1#
+  y#
+}#
+#
+trans <- function(x, a = -1, b = 1) {#
+  y <- (x-a)/(b-a)*2-1#
+  y[which(y < -1)] <- -1#
+  y[which(y > 1)] <- 1#
+  y#
+}#
+#
+rev <- function(y, a = -1, b = 1) (y+1)*(b-a)*0.5+a#
+#
+fn <- function(x, cc, nt){#
+  size <- length(x)#
+  Tk <- matrix(1, size[1], 1)#
+  Tk <- cbind(Tk, x)#
+  for (k in 2:(nt-1))#
+    Tk <- cbind(Tk, 2*x*Tk[, k]-Tk[, k-1])#
+  Tk %*% cc#
+}#
+#
+cheb <- function(x, coef, a, b, n) {#
+  fn(trans(matrix(x, 1), a, b), coef, n) #
+}#
+#
+#---------------------------------------#
+# Policy Iteration#
+#---------------------------------------#
+#
+nt <- 40#
+at <- 0.05#
+bt <- 4.0#
+#
+node <- rev(xj(nt), at[1], bt[1])#
+apxfun <- function(x, coef) fn(trans(x, at, bt), coef, nt)#
+#
+niter <- 1000#
+eps <- 0.0001#
+#
+# initialization#
+f <- function (x) -45 + sqrt(x)#
+cc <- rep(0, nt)#
+v <- rep(0, nt)#
+coef <- rep(0, nt)#
+coef2 <- rep(0, nt)#
+#
+for(iter in 1:niter) {#
+  print(iter)#
+  v1 <- c(v)#
+  c1 <- c(cc)#
+  coef1 <- coef#
+  for(i in 1:nt) {#
+    obj <- function(ct) {#
+      st <- node[i]#
+      sa <- matrix(g(st,ct), 1)#
+      return(-U(ct)-beta*f(sa))#
+    }#
+    opt <- optimize(obj, c(0.001,  min((1 - delta) *node[i]+node[i]^alpha,bt*0.99)))#
+    cc[i] <- opt$minimum#
+  }#
+  fobj1 <- function(coef) cc - apxfun(node, coef)#
+  coef1 <- nleqslv(coef1, fobj1)$x#
+  hc <- function(x) cheb(x, coef1, at, bt, nt)#
+  for(i in 1:nt) {#
+    st <- node[i]#
+    ct <- max(min(hc(st), st), 0.001)#
+    y <- U(ct)#
+    for(k in 1:1000) {#
+       st <- g(st, ct)#
+       ct <- max(min(hc(st), st), 0.001)#
+       y <- y + beta^k * U(ct)#
+      }#
+    v[i] <- y#
+  }#
+  if (identical(abs(c(cc) - c1) < eps ,rep(T, nt))) break#
+  fobj2 <- function(coef) v - apxfun(node, coef)#
+  coef2 <- nleqslv(coef2, fobj2)$x#
+  f <- function(x) cheb(x, coef2, at, bt, nt)#
+  plot(cbind(node, v), typ = "l")#
+  print(abs(c(cc) - c1))#
+}#
+#
+#---------------------------------------#
+# Plot#
+#---------------------------------------#
+#
+#deltaK <- function(K) K^alpha - delta*K#
+#y1 <- c()#
+#for(i in 1:nt) #
+#  y1[i] <- deltaK(node[i])#
+##
+#windows(7, 5)#
+#par(mai = c(0.85, 0.88,0.85, 0.35))#
+#par(ps = 15)#
+#plot(cbind(node, cc), typ = "l", xlab = expression(K[t]), ylab = expression(C[t]), xlim = c(0,2.5), main = "Policy Function")#
+#points(cbind(Kss, Css), pch = 19)#
+#text(cbind(Kss+0.20, Css-0.1), expression(paste("(",K[ss],", ", C[ss],")")))#
+#lines(cbind(node, y1), col = 2, lty = 2)#
+##
+#legend(cbind(1.8, 1.4), legend = c(expression(paste(C[t]," = F(", K[t], ")")), expression(paste(Delta,K[t]," = 0"))), col = 1:2, lty = 1:2)#
+##
+#text(cbind(0.5, 1.2), expression(paste(Delta,K[t]," < 0")), col = 2)#
+#text(cbind(2.0, 0.4), expression(paste(Delta,K[t]," > 0")), col = 2)#
+##
+# dev.copy2eps(file= figpath %+% "polit_ram_ct2.eps")#
+#--------------------#
+# シミュレーション#
+#--------------------#
+#
+K01 <- Kss*0.5#
+Kt1 <- K01#
+Ct1 <- c()#
+#
+for(i in 1:31) {#
+  Ct1[i] <- hc(Kt1[i])#
+  Kt1[i+1] <- g(Kt1[i], Ct1[i])#
+}#
+#
+K02 <- Kss*2#
+Kt2 <- K02#
+Ct2 <- c()#
+for(i in 1:31) {#
+  Ct2[i] <- hc(Kt2[i])#
+  Kt2[i+1] <- g(Kt2[i], Ct2[i])#
+}#
+#
+#--------------------#
+# 位相図の作図#
+#--------------------#
+#
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1)) ###
+FKt <- At*K^alpha - (1-delta)*K - Kss ###
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1)) ###
+FKt <- At*K^alpha - (1-delta)*Kt - Kss ###
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31
+cbind(c(Kt, Kt),c(0, 100))
+lines(cbind(c(Kss, Kss),c(0, 100)))#
+points(Kss,FCt(Kss), pch=19)
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1)) ###
+FKt <- At*Kt^alpha - (1-delta)*Kt - Kss ###
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+lines(cbind(c(Kss, Kss),c(0, 100)))#
+points(Kss,FCt(Kss), pch=19)#
+#
+axis(2)#
+axis(1, labels = c(0:3), at = 0:3)#
+abline(v = c(K01,K02), lty = 2)#
+box()#
+#
+axis(1, labels = c(expression(K[1]^A)), at = K01)#
+axis(1, labels = c(expression(K[1]^B)), at = K02)#
+axis(1, labels = c(expression("K*")), at = Kss)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.05)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.05)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}#
+FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C#
+#
+Kt1a <- K01#
+Ct1a <- hc(K01)*1.05#
+for(i in 1:31) {#
+  Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])#
+  Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])#
+}#
+#
+Kt1b <- K01#
+Ct1b <- hc(K01)*0.95#
+for(i in 1:31) {#
+  Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])#
+  Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])#
+}#
+#
+Kt2a <- K02#
+Ct2a <- hc(K02)*1.05#
+for(i in 1:31) {#
+  Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])#
+  Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])#
+}#
+#
+Kt2b <- K02#
+Ct2b <- hc(K02)*0.95#
+for(i in 1:31) {#
+  Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])#
+  Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])#
+}#
+#
+for(i in 1:maxT){#
+  if (!is.nan(Kt1a[i]))#
+    arrows(Kt1a[i], Ct1a[i], Kt1a[i+1], Ct1a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt1b[i]))#
+    arrows(Kt1b[i], Ct1b[i], Kt1b[i+1], Ct1b[i+1], length = 0.05, col = 4, lty = 1)#
+  if (!is.nan(Kt2a[i]))#
+    arrows(Kt2a[i], Ct2a[i], Kt2a[i+1], Ct2a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt2b[i]))#
+    arrows(Kt2b[i], Ct2b[i], Kt2b[i+1], Ct2b[i+1], length = 0.05, col = 4, lty = 1)#
+}
+curve(FKt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5))
+FKt <- function(K) At*K^alpha - (1-delta)*K - Kss
+curve(FKt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5))
+FKt(seq(0,3, 0.01))
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss
+FKt(seq(0,3, 0.01))
+curve(FKt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5))
+lines(cbind(c(Kss, Kss),c(0, 100)))
+FKt(#
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+#lines(cbind(c(Kss, Kss),c(0, 100)))#
+#
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))#
+points(Kss,FCt(Kss), pch=19)#
+#
+)
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+#lines(cbind(c(Kss, Kss),c(0, 100)))#
+#
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))#
+points(Kss,FCt(Kss), pch=19)#
+#
+axis(2)#
+axis(1, labels = c(0:3), at = 0:3)#
+abline(v = c(K01,K02), lty = 2)#
+box()#
+#
+axis(1, labels = c(expression(K[1]^A)), at = K01)#
+axis(1, labels = c(expression(K[1]^B)), at = K02)#
+axis(1, labels = c(expression("K*")), at = Kss)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.05)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.05)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}#
+FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C#
+#
+Kt1a <- K01#
+Ct1a <- hc(K01)*1.05#
+for(i in 1:31) {#
+  Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])#
+  Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])#
+}#
+#
+Kt1b <- K01#
+Ct1b <- hc(K01)*0.95#
+for(i in 1:31) {#
+  Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])#
+  Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])#
+}#
+#
+Kt2a <- K02#
+Ct2a <- hc(K02)*1.05#
+for(i in 1:31) {#
+  Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])#
+  Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])#
+}#
+#
+Kt2b <- K02#
+Ct2b <- hc(K02)*0.95#
+for(i in 1:31) {#
+  Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])#
+  Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])#
+}#
+#
+for(i in 1:maxT){#
+  if (!is.nan(Kt1a[i]))#
+    arrows(Kt1a[i], Ct1a[i], Kt1a[i+1], Ct1a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt1b[i]))#
+    arrows(Kt1b[i], Ct1b[i], Kt1b[i+1], Ct1b[i+1], length = 0.05, col = 4, lty = 1)#
+  if (!is.nan(Kt2a[i]))#
+    arrows(Kt2a[i], Ct2a[i], Kt2a[i+1], Ct2a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt2b[i]))#
+    arrows(Kt2b[i], Ct2b[i], Kt2b[i+1], Ct2b[i+1], length = 0.05, col = 4, lty = 1)#
+}#
+#
+points(cbind(Kt1a[1], Ct1a[1]), pch = 15, col = 2)#
+points(cbind(Kt1[1], Ct1[1]), pch = 4)#
+points(cbind(Kt1b[1], Ct1b[1]), pch = 17, col = 4)#
+#
+points(cbind(Kt2a[1], Ct2a[1]), pch = 15, col = 2)#
+points(cbind(Kt2[1], Ct2[1]), pch = 4)#
+points(cbind(Kt2b[1], Ct2b[1]), pch = 17, col = 4)#
+maxT2 <- 100#
+#
+Kt3a <- Kss-0.01#
+Ct3a <- Css+0.01#
+for(i in 1:maxT2) {#
+  Kt3a[i+1] <- g(Kt3a[i], Ct3a[i])#
+  Ct3a[i+1] <- FCa(Kt3a[i], Ct3a[i])#
+}#
+end <- min(which(is.nan(Ct3a)))#
+#Kt3a[end] <- Kt1a[8]+0.04#
+#Ct3a[end] <- 1.6#
+#
+Kt3b <- Kss+0.01#
+Ct3b <- Css-0.01#
+for(i in 1:maxT2) {#
+  Kt3b[i+1] <- g(Kt3b[i], Ct3b[i])#
+  Ct3b[i+1] <- FCa(Kt3b[i], Ct3b[i])#
+}#
+#
+for(i in 1:maxT2){#
+  if (!is.nan(Kt3a[i]))#
+    arrows(Kt3a[i], Ct3a[i], Kt3a[i+1], Ct3a[i+1], length = 0.05, col = 1, lty = 1)#
+  if (!is.nan(Kt3b[i]))#
+    arrows(Kt3b[i], Ct3b[i], Kt3b[i+1], Ct3b[i+1], length = 0.05, col = 1, lty = 1)#
+}#
+#
+text(Kss+0.07, Css+0.07, "F")
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.3), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+#lines(cbind(c(Kss, Kss),c(0, 100)))#
+#
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))#
+points(Kss,FCt(Kss), pch=19)#
+#
+axis(2)#
+axis(1, labels = c(0:3), at = 0:3)#
+abline(v = c(K01,K02), lty = 2)#
+box()#
+#
+axis(1, labels = c(expression(K[1]^A)), at = K01)#
+axis(1, labels = c(expression(K[1]^B)), at = K02)#
+axis(1, labels = c(expression("K*")), at = Kss)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.05)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.05)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}#
+FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C#
+const <- 1.06#
+#
+Kt1a <- K01#
+Ct1a <- hc(K01)*const#
+for(i in 1:31) {#
+  Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])#
+  Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])#
+}#
+#
+Kt1b <- K01#
+Ct1b <- hc(K01)/const#
+for(i in 1:31) {#
+  Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])#
+  Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])#
+}#
+#
+Kt2a <- K02#
+Ct2a <- hc(K02)*const#
+for(i in 1:31) {#
+  Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])#
+  Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])#
+}#
+#
+Kt2b <- K02#
+Ct2b <- hc(K02)/const#
+for(i in 1:31) {#
+  Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])#
+  Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])#
+}#
+#
+for(i in 1:maxT){#
+  if (!is.nan(Kt1a[i]))#
+    arrows(Kt1a[i], Ct1a[i], Kt1a[i+1], Ct1a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt1b[i]))#
+    arrows(Kt1b[i], Ct1b[i], Kt1b[i+1], Ct1b[i+1], length = 0.05, col = 4, lty = 1)#
+  if (!is.nan(Kt2a[i]))#
+    arrows(Kt2a[i], Ct2a[i], Kt2a[i+1], Ct2a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt2b[i]))#
+    arrows(Kt2b[i], Ct2b[i], Kt2b[i+1], Ct2b[i+1], length = 0.05, col = 4, lty = 1)#
+}#
+#
+points(cbind(Kt1a[1], Ct1a[1]), pch = 15, col = 2)#
+points(cbind(Kt1[1], Ct1[1]), pch = 4)#
+points(cbind(Kt1b[1], Ct1b[1]), pch = 17, col = 4)#
+#
+points(cbind(Kt2a[1], Ct2a[1]), pch = 15, col = 2)#
+points(cbind(Kt2[1], Ct2[1]), pch = 4)#
+points(cbind(Kt2b[1], Ct2b[1]), pch = 17, col = 4)#
+maxT2 <- 100#
+#
+Kt3a <- Kss-0.01#
+Ct3a <- Css+0.01#
+for(i in 1:maxT2) {#
+  Kt3a[i+1] <- g(Kt3a[i], Ct3a[i])#
+  Ct3a[i+1] <- FCa(Kt3a[i], Ct3a[i])#
+}#
+end <- min(which(is.nan(Ct3a)))#
+#Kt3a[end] <- Kt1a[8]+0.04#
+#Ct3a[end] <- 1.6#
+#
+Kt3b <- Kss+0.01#
+Ct3b <- Css-0.01#
+for(i in 1:maxT2) {#
+  Kt3b[i+1] <- g(Kt3b[i], Ct3b[i])#
+  Ct3b[i+1] <- FCa(Kt3b[i], Ct3b[i])#
+}#
+#
+for(i in 1:maxT2){#
+  if (!is.nan(Kt3a[i]))#
+    arrows(Kt3a[i], Ct3a[i], Kt3a[i+1], Ct3a[i+1], length = 0.05, col = 1, lty = 1)#
+  if (!is.nan(Kt3b[i]))#
+    arrows(Kt3b[i], Ct3b[i], Kt3b[i+1], Ct3b[i+1], length = 0.05, col = 1, lty = 1)#
+}#
+#
+text(Kss, Css+0.05, "F")
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.2), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+#lines(cbind(c(Kss, Kss),c(0, 100)))#
+#
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))#
+points(Kss,FCt(Kss), pch=19)#
+#
+axis(2)#
+axis(1, labels = c(0:3), at = 0:3)#
+abline(v = c(K01,K02), lty = 2)#
+box()#
+#
+axis(1, labels = c(expression(K[1]^A)), at = K01)#
+axis(1, labels = c(expression(K[1]^B)), at = K02)#
+axis(1, labels = c(expression("K*")), at = Kss)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.05)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.05)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}#
+FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C#
+const <- 1.06#
+#
+Kt1a <- K01#
+Ct1a <- hc(K01)*const#
+for(i in 1:31) {#
+  Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])#
+  Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])#
+}#
+#
+Kt1b <- K01#
+Ct1b <- hc(K01)/const#
+for(i in 1:31) {#
+  Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])#
+  Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])#
+}#
+#
+Kt2a <- K02#
+Ct2a <- hc(K02)*const#
+for(i in 1:31) {#
+  Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])#
+  Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])#
+}#
+#
+Kt2b <- K02#
+Ct2b <- hc(K02)/const#
+for(i in 1:31) {#
+  Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])#
+  Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])#
+}#
+#
+for(i in 1:maxT){#
+  if (!is.nan(Kt1a[i]))#
+    arrows(Kt1a[i], Ct1a[i], Kt1a[i+1], Ct1a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt1b[i]))#
+    arrows(Kt1b[i], Ct1b[i], Kt1b[i+1], Ct1b[i+1], length = 0.05, col = 4, lty = 1)#
+  if (!is.nan(Kt2a[i]))#
+    arrows(Kt2a[i], Ct2a[i], Kt2a[i+1], Ct2a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt2b[i]))#
+    arrows(Kt2b[i], Ct2b[i], Kt2b[i+1], Ct2b[i+1], length = 0.05, col = 4, lty = 1)#
+}#
+#
+points(cbind(Kt1a[1], Ct1a[1]), pch = 15, col = 2)#
+points(cbind(Kt1[1], Ct1[1]), pch = 4)#
+points(cbind(Kt1b[1], Ct1b[1]), pch = 17, col = 4)#
+#
+points(cbind(Kt2a[1], Ct2a[1]), pch = 15, col = 2)#
+points(cbind(Kt2[1], Ct2[1]), pch = 4)#
+points(cbind(Kt2b[1], Ct2b[1]), pch = 17, col = 4)#
+maxT2 <- 100#
+#
+Kt3a <- Kss-0.01#
+Ct3a <- Css+0.01#
+for(i in 1:maxT2) {#
+  Kt3a[i+1] <- g(Kt3a[i], Ct3a[i])#
+  Ct3a[i+1] <- FCa(Kt3a[i], Ct3a[i])#
+}#
+end <- min(which(is.nan(Ct3a)))#
+#Kt3a[end] <- Kt1a[8]+0.04#
+#Ct3a[end] <- 1.6#
+#
+Kt3b <- Kss+0.01#
+Ct3b <- Css-0.01#
+for(i in 1:maxT2) {#
+  Kt3b[i+1] <- g(Kt3b[i], Ct3b[i])#
+  Ct3b[i+1] <- FCa(Kt3b[i], Ct3b[i])#
+}#
+#
+for(i in 1:maxT2){#
+  if (!is.nan(Kt3a[i]))#
+    arrows(Kt3a[i], Ct3a[i], Kt3a[i+1], Ct3a[i+1], length = 0.05, col = 1, lty = 1)#
+  if (!is.nan(Kt3b[i]))#
+    arrows(Kt3b[i], Ct3b[i], Kt3b[i+1], Ct3b[i+1], length = 0.05, col = 1, lty = 1)#
+}#
+#
+text(Kss, Css+0.05, "F")
+At <- 1#
+Kss <- ((1/beta+delta-1)/alpha/At)^(1/(alpha-1))#
+FKt <- function(K) At*K^alpha + (1-delta)*K - Kss#
+FCt <- function(K) At*K^alpha - delta*K#
+#
+maxT <- 31#
+#
+#windows(7, 7)#
+par(ps = 15)#
+par(mai = c(0.85, 0.88, 0.35, 0.35))#
+par(mfrow = c(1,1))#
+#curve(FCt, 0, 3, ylim = c(0.3, 1.7), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "Phase Diagram",axes = F)#
+curve(FCt, 0, 3, ylim = c(0.3, 1.225), xlim = c(0.05, 2.5), xlab = expression(K[t]), ylab = expression(C[t]), main = "",axes = F)#
+abline(h = 0)#
+#lines(cbind(c(Kss, Kss),c(0, 100)))#
+#
+lines(cbind(seq(0,3, 0.01),FKt(seq(0,3, 0.01))))#
+points(Kss,FCt(Kss), pch=19)#
+#
+axis(2)#
+axis(1, labels = c(0:3), at = 0:3)#
+abline(v = c(K01,K02), lty = 2)#
+box()#
+#
+axis(1, labels = c(expression(K[1]^A)), at = K01)#
+axis(1, labels = c(expression(K[1]^B)), at = K02)#
+axis(1, labels = c(expression("K*")), at = Kss)#
+#
+for(i in 1:12){#
+  arrows(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1], length = 0.05)#
+  arrows(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1], length = 0.05)#
+}#
+for(i in 13:(maxT-1)){#
+  segments(Kt1[i], Ct1[i], Kt1[i+1], Ct1[i+1])#
+  segments(Kt2[i], Ct2[i], Kt2[i+1], Ct2[i+1])#
+}#
+FCa <- function(K, C) beta*(alpha*g(K,C)^(alpha-1)-delta+1)*C#
+const <- 1.06#
+#
+Kt1a <- K01#
+Ct1a <- hc(K01)*const#
+for(i in 1:31) {#
+  Kt1a[i+1] <- g(Kt1a[i], Ct1a[i])#
+  Ct1a[i+1] <- FCa(Kt1a[i], Ct1a[i])#
+}#
+#
+Kt1b <- K01#
+Ct1b <- hc(K01)/const#
+for(i in 1:31) {#
+  Kt1b[i+1] <- g(Kt1b[i], Ct1b[i])#
+  Ct1b[i+1] <- FCa(Kt1b[i], Ct1b[i])#
+}#
+#
+Kt2a <- K02#
+Ct2a <- hc(K02)*const#
+for(i in 1:31) {#
+  Kt2a[i+1] <- g(Kt2a[i], Ct2a[i])#
+  Ct2a[i+1] <- FCa(Kt2a[i], Ct2a[i])#
+}#
+#
+Kt2b <- K02#
+Ct2b <- hc(K02)/const#
+for(i in 1:31) {#
+  Kt2b[i+1] <- g(Kt2b[i], Ct2b[i])#
+  Ct2b[i+1] <- FCa(Kt2b[i], Ct2b[i])#
+}#
+#
+for(i in 1:maxT){#
+  if (!is.nan(Kt1a[i]))#
+    arrows(Kt1a[i], Ct1a[i], Kt1a[i+1], Ct1a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt1b[i]))#
+    arrows(Kt1b[i], Ct1b[i], Kt1b[i+1], Ct1b[i+1], length = 0.05, col = 4, lty = 1)#
+  if (!is.nan(Kt2a[i]))#
+    arrows(Kt2a[i], Ct2a[i], Kt2a[i+1], Ct2a[i+1], length = 0.05, col = 2, lty = 1)#
+  if (!is.nan(Kt2b[i]))#
+    arrows(Kt2b[i], Ct2b[i], Kt2b[i+1], Ct2b[i+1], length = 0.05, col = 4, lty = 1)#
+}#
+#
+points(cbind(Kt1a[1], Ct1a[1]), pch = 15, col = 2)#
+points(cbind(Kt1[1], Ct1[1]), pch = 4)#
+points(cbind(Kt1b[1], Ct1b[1]), pch = 17, col = 4)#
+#
+points(cbind(Kt2a[1], Ct2a[1]), pch = 15, col = 2)#
+points(cbind(Kt2[1], Ct2[1]), pch = 4)#
+points(cbind(Kt2b[1], Ct2b[1]), pch = 17, col = 4)#
+maxT2 <- 100#
+#
+Kt3a <- Kss-0.01#
+Ct3a <- Css+0.01#
+for(i in 1:maxT2) {#
+  Kt3a[i+1] <- g(Kt3a[i], Ct3a[i])#
+  Ct3a[i+1] <- FCa(Kt3a[i], Ct3a[i])#
+}#
+end <- min(which(is.nan(Ct3a)))#
+#Kt3a[end] <- Kt1a[8]+0.04#
+#Ct3a[end] <- 1.6#
+#
+Kt3b <- Kss+0.01#
+Ct3b <- Css-0.01#
+for(i in 1:maxT2) {#
+  Kt3b[i+1] <- g(Kt3b[i], Ct3b[i])#
+  Ct3b[i+1] <- FCa(Kt3b[i], Ct3b[i])#
+}#
+#
+for(i in 1:maxT2){#
+  if (!is.nan(Kt3a[i]))#
+    arrows(Kt3a[i], Ct3a[i], Kt3a[i+1], Ct3a[i+1], length = 0.05, col = 1, lty = 1)#
+  if (!is.nan(Kt3b[i]))#
+    arrows(Kt3b[i], Ct3b[i], Kt3b[i+1], Ct3b[i+1], length = 0.05, col = 1, lty = 1)#
+}#
+#
+text(Kss, Css+0.05, "F")
+warnings()
+system.os
+system.os()
+help(system)
+.Platform()
+.Platform
+.Platform$Os.type
+.Platform$OS.type
+.Platform$OS.type == "windows"
+cd("~/OneDrive - Nezu Foundation of the Musashi Academy/work/note/macro2/dynamicmodels/ch2")
+setwd("~/OneDrive - Nezu Foundation of the Musashi Academy/work/note/macro2/dynamicmodels/ch2")
+source("figures2appendix.R")
+source("figures2appendix.R")
+source("figures2appendix.R")
+source("figures2appendix.R")
+getwd()
+figpath <- "../../figs/"
+dev.copy2eps(file= figpath %+% "phase_ram_ck2.eps")

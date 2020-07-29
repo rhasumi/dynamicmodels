@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 #----------------------------
 # Žå‚ÈŠm—¦•ª•z
@@ -88,7 +89,7 @@ for(i in 1:999) {
   vec3[i+1] <- rho*vec3[i] + rnorm(1)
 }
 
-windows(10,7)
+if (.Platform$OS.type == "windows") windows(10,7)
 par(ps = 15)
 plot(vec1[1:200], typ = "l", xlab = "", ylab = "", main = expression(a[t]), ylim = c(-5, 5))
 lines(vec2[1:200], col = 2,lty=2)
@@ -131,7 +132,7 @@ rejrate2 <- sum(chain2[201:1200] == chain2[201:1200-1])/1000
 rejrate3 <- sum(chain3[201:1200] == chain3[201:1200-1])/1000
 1-c(rejrate1,rejrate2,rejrate3)
 
-windows(7,7)
+if (.Platform$OS.type == "windows") windows(7,7)
 
 par(mfrow = c(2,2), ps = 15, mai = c(0.85, 0.68, 0.68, 0.35)*0.5)
 par(family="Japan1GothicBBB") 

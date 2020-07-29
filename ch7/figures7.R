@@ -4,7 +4,8 @@
 #=======================================
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
 beta <- 0.99
 gamma <- 5 # ‚±‚±•ÏX
@@ -18,7 +19,7 @@ phi_y2 <- 3
 phi_pi1 <- -(1-beta)*phi_y1/kappa+1
 phi_pi2 <- -(1-beta)*phi_y2/kappa+1
 
-windows(7, 7)
+if (.Platform$OS.type == "windows") windows(7, 7)
 par(ps = 15)
 par(mai = c(0.68*1.5, 0.68*1.5, 0.34, 0.34))
 

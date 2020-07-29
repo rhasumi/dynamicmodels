@@ -5,9 +5,10 @@
 
 "%+%" <- function(x, y) paste(x, y, sep = "")
 dset <- read.csv("dset_fig.csv")
-figpath <- "../../figs/"
+# figpath <- "../../figs/"
+figpath <- "./"
 
-windows(7, 8)
+if (.Platform$OS.type == "windows") windows(7, 8)
 par(mfrow = c(3, 1), ps = 13)
 par(mai = c(0.7,1.2, 0.5, 0.35)*0.5)
 par(family="Japan1GothicBBB") 
