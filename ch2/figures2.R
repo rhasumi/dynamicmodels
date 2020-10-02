@@ -8,7 +8,7 @@
 figpath <- "./"
 
 #--------------------
-# Œø—pŠÖ”
+# åŠ¹ç”¨é–¢æ•°
 #--------------------
 U <- function(a, b) sqrt(a*b)
 Ub <- function(a, U) U^2/a
@@ -39,7 +39,6 @@ text(3.3, 6.3, labels = "E")
 
 dev.copy2eps(file= figpath %+% "feasible2.eps")
 
-
 par(ps = 20)
 par(mai = c(0.85, 0.88, 0.35, 0.35))
 funsqx <- function(x) sqrt(x)
@@ -52,10 +51,8 @@ par(ps = 20, mai = c(0.85, 1.0, 0.68, 0.35))
 curve(funx2, -3, 3, main = "", ylab = expression(x^2))
 dev.copy2eps(file= figpath %+% "x2.eps")
 
-
-
 #--------------------
-# Œø—pÅ‘å‰»
+# åŠ¹ç”¨æœ€å¤§åŒ–
 #--------------------
 
 U1 <- function(a, b, U) exp(U-log(a))

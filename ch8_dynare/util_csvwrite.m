@@ -1,10 +1,10 @@
 function [] = util_csvwrite(filename, x, str)
 
-fid = fopen(filename,'wt'); % ‘‚«‚İ—p‚Éƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+fid = fopen(filename,'wt'); % æ›¸ãè¾¼ã¿ç”¨ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 [rows,cols] = size(x);
 if cols > 1
-  fprintf(fid, '%s,', str{1,1:end-1}); % •¶š—ñ‚Ì‘‚«o‚µ
-  fprintf(fid, '%s\n', str{1,end}); % s––‚Ì•¶š—ñ‚ÍA‰üs‚ğŠÜ‚ß‚Äo—Í
+  fprintf(fid, '%s,', str{1,1:end-1}); % æ–‡å­—åˆ—ã®æ›¸ãå‡ºã—
+  fprintf(fid, '%s\n', str{1,end}); % è¡Œæœ«ã®æ–‡å­—åˆ—ã¯ã€æ”¹è¡Œã‚’å«ã‚ã¦å‡ºåŠ›
   for i = 1:rows
       fprintf(fid, '%f,', x(i,1:end-1));
       fprintf(fid, '%f\n', x(i, end));
@@ -16,4 +16,4 @@ else
   end
 end
 fclose('all');
- % ƒtƒ@ƒCƒ‹ƒNƒ[ƒY
+ % ãƒ•ã‚¡ã‚¤ãƒ«ã‚¯ãƒ­ãƒ¼ã‚º

@@ -22,7 +22,7 @@ for(i in 0:200)
   y <- y + beta^i * U(Css)
 
 #---------------------------------------
-# ƒ`ƒFƒrƒVƒFƒt‹ßŽ—•âŠÔi1ŽŸj
+# ãƒã‚§ãƒ“ã‚·ã‚§ãƒ•è¿‘ä¼¼è£œé–“ï¼ˆ1æ¬¡ï¼‰
 #---------------------------------------
 
 library(nleqslv) # nleqslv
@@ -133,7 +133,7 @@ plot(cbind(node, v), typ = "l", xlab = expression(K[t]), ylab = expression(V(K[t
 dev.copy2eps(file= figpath %+% "polit_ram_v.eps")
 
 #--------------------
-# ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“
+# ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³
 #--------------------
 
 K01 <- Kss*0.5

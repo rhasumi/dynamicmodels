@@ -3,15 +3,15 @@
 %   modified on 2020/01/02
 %=======================================
 
-% ƒpƒX‚ÌƒZƒbƒg
+% ãƒ‘ã‚¹ã®ã‚»ãƒƒãƒˆ
 cd 'C:\Users\USERNAME\ch8_dynare_test'
 
-% ƒf[ƒ^ƒZƒbƒg‚Ìì¬
+% ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆã®ä½œæˆ
 script_dataset
 
-% Dynare‚ÌƒpƒX‚ÌƒZƒbƒg
+% Dynareã®ãƒ‘ã‚¹ã®ã‚»ãƒƒãƒˆ
 addpath C:\programs\dynare\4.5.7\matlab
 
-% ƒpƒ‰ƒ[ƒ^„’èAo—Í
+% ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ¨å®šã€å‡ºåŠ›
 dynare NK_Linear_EST
 

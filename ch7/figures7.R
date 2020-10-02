@@ -8,7 +8,7 @@
 figpath <- "./"
 
 beta <- 0.99
-gamma <- 5 # ‚±‚±•ÏX
+gamma <- 5 # ã“ã“å¤‰æ›´
 varrho <- 0.9
 
 kappa <- (1-varrho)*(1-varrho*beta)*(gamma+1)/varrho

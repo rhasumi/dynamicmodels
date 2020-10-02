@@ -3,14 +3,14 @@
 //   modified on 2019/10/19
 //===========================================
 
-// 1. “à¶•Ï”AŠO¶•Ï”‚ÌéŒ¾
+// 1. å†…ç”Ÿå¤‰æ•°ã€å¤–ç”Ÿå¤‰æ•°ã®å®£è¨€
 var x ppi a ii v;
 varexo epsilon z e;
 
-// 2. ƒpƒ‰ƒ[ƒ^‚ÌéŒ¾
+// 2. ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å®£è¨€
 parameters beta gamma varrho phi_pi phi_y rho_A rho_v;
 
-// ƒpƒ‰ƒ[ƒ^’l‚Ì‘ã“ü
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å€¤ã®ä»£å…¥
 beta = 0.99;
 gamma = 5;
 varrho = 0.9;
@@ -19,7 +19,7 @@ phi_y = 0.5;
 rho_A = 0.9;
 rho_v = 0.7;
 
-// 3. •û’ö®‚Ì’è‹`
+// 3. æ–¹ç¨‹å¼ã®å®šç¾©
 model(linear);
 # kappa = (1-varrho)*(1-varrho*beta)*(gamma+1)/varrho;
 x = x(+1)-(ii-ppi(+1))+(rho_A-1)*a;
@@ -35,10 +35,10 @@ var z; stderr 0.5;
 var e; stderr 0.5;
 end;
 
-// ‘S‚Äƒ[ƒ‚É‚È‚é‚±‚Æ‚ğ”O‚Ì‚½‚ßƒ`ƒFƒbƒN
+// å…¨ã¦ã‚¼ãƒ­ã«ãªã‚‹ã“ã¨ã‚’å¿µã®ãŸã‚ãƒã‚§ãƒƒã‚¯
 steady;
 
-// ƒ‚ƒfƒ‹‚Ìƒ`ƒFƒbƒN
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒã‚§ãƒƒã‚¯
 check;
 
 estimated_params;

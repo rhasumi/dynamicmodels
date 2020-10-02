@@ -29,7 +29,7 @@ contl <- (1-alpha)*lndl
 conta <- lndy-contk-contl
 
 rslt1 <- cbind(lndy, contk, conta, contl)
-colnames(rslt1) <- c("GDP¬’·—¦", "Ž‘–{‚ÌŠñ—^“x", "¶ŽY«‚ÌŠñ—^“x","˜J“­‚ÌŠñ—^“x")
+colnames(rslt1) <- c("GDPæˆé•·çŽ‡", "è³‡æœ¬ã®å¯„ä¸Žåº¦", "ç”Ÿç”£æ€§ã®å¯„ä¸Žåº¦","åŠ´åƒã®å¯„ä¸Žåº¦")
 rownames(rslt1) <- c("1984-1988","1989-1993","1994-1998","1999-2003","2004-2008","2009-2013","2014-2018")
 
 xtable(rslt1)

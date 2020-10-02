@@ -8,7 +8,7 @@
 figpath <- "./"
 
 #----------------------------
-# Žå‚ÈŠm—¦•ª•z
+# ä¸»ãªç¢ºçŽ‡åˆ†å¸ƒ
 
 f1 <- function(x) dnorm(x, 0, 1)
 f2 <- function(x) dgamma(x, 1, 1)
@@ -34,7 +34,7 @@ abline(h = 0, col = 'grey')
 dev.copy2eps(file= figpath %+% "distribution.eps")
 
 #----------------------------
-# ƒxƒCƒY„’è‚Ì—áiƒxƒ‹ƒk[ƒC‰ß’öj
+# ãƒ™ã‚¤ã‚ºæŽ¨å®šã®ä¾‹ï¼ˆãƒ™ãƒ«ãƒŒãƒ¼ã‚¤éŽç¨‹ï¼‰
 
 N <- c(5, 20, 100, 1000)
 theta <- 0.6
@@ -73,7 +73,7 @@ lines(cbind(c(theta,theta),c(0, 10^4)),col=3)
 dev.copy2eps(file= figpath %+% "bernoulli.eps")
 
 #----------------------------
-# ƒ}ƒ‹ƒRƒt‰ß’ö‚Ì—á
+# ãƒžãƒ«ã‚³ãƒ•éŽç¨‹ã®ä¾‹
 
 set.seed(101)
 aa <- c(0, -100, 100)
@@ -98,7 +98,7 @@ lines(vec3[1:200], col = 4,lty=4)
 dev.copy2eps(file= figpath %+% "markov.eps")
 
 #----------------------------
-# MHƒAƒ‹ƒSƒŠƒYƒ€‚Ì—á
+# MHã‚¢ãƒ«ã‚´ãƒªã‚ºãƒ ã®ä¾‹
 
 set.seed(102)
 
@@ -146,7 +146,7 @@ lines(cbind(x2, y2))
 hist(chain3[201:1200], xlab = "", main = expression(paste(sigma^2, " = 5000")), probability = T, xlim = c(0, 15))
 lines(cbind(x2, y2))
 
-hist(chain4[201:1200], xlab = "", main = "(ŽQl)", probability = T, xlim = c(0, 15), ylim = c(0, 0.2))
+hist(chain4[201:1200], xlab = "", main = "(å‚è€ƒ)", probability = T, xlim = c(0, 15), ylim = c(0, 0.2))
 lines(cbind(x2, y2))
 
 dev.copy2pdf(file=figpath %+% "metropolis.pdf",family="Japan1GothicBBB")

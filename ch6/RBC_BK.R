@@ -58,8 +58,8 @@ Cmat[7,7] <- rho
 
 A <- solve(Cmat) %*% Bmat
 
-# Policy/Transition Function ‚ð‹‚ß‚éŠÖ”
-# ‰Á“¡—Á[2007]‚àŽQÆ
+# Policy/Transition Function ã‚’æ±‚ã‚ã‚‹é–¢æ•°
+# åŠ è—¤æ¶¼[2007]ã‚‚å‚ç…§
 
 W <- eigen(A)[[2]]
 theta <- eigen(A)[[1]]

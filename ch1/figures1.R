@@ -8,7 +8,7 @@
 figpath <- "./"
 
 #--------------------
-# Žw”ŠÖ”A‘Î”ŠÖ”
+# æŒ‡æ•°é–¢æ•°ã€å¯¾æ•°é–¢æ•°
 #--------------------
 
 par(ps = 20)
@@ -20,7 +20,7 @@ curve(log, -0, 6, ylab = "ln(x)")
 dev.copy2eps(file= figpath %+% "log.eps")
 
 #--------------------
-# Ž©‘R‘Î”‚ÌˆÓ–¡
+# è‡ªç„¶å¯¾æ•°ã®æ„å‘³
 #--------------------
 yt <- cumprod(c(1, rep(1.05, 100)))*100
 plot(cbind(0:40, yt[1:41]), typ = "l", xlab = "t", ylab = expression(Y[t]))
@@ -30,7 +30,7 @@ plot(cbind(0:40, log(yt[1:41])), typ = "l", xlab = "t", ylab = expression(paste(
 dev.copy2eps(file= figpath %+% "exln2.eps")
 
 #--------------------
-# ¶ŽYŠÖ”
+# ç”Ÿç”£é–¢æ•°
 #--------------------
 par(ps = 20)
 fk <- function(K) K^0.3
@@ -42,7 +42,7 @@ curve(fk, 0, 3, xlab = "K", ylab = "f(K)")
 points(cbind(c(1,1.5,2),fk(c(1,1.5,2))), pch=19)
 
 #--------------------
-# ”÷•ª‚ÌˆÓ–¡
+# å¾®åˆ†ã®æ„å‘³
 #--------------------
 b1 <- fk(2)-1
 b2 <- (fk(1.5)-1)/0.5
@@ -53,7 +53,7 @@ abline(1-b1, b1, lty = 2, col = 4)
 abline(1-b2, b2, lty = 3, col = 4)
 abline(1-b4, b4, col = 4)
 
-legend(1.7, 0.3, legend = c("ŒX‚« = 0.23    ","ŒX‚« = 0.26"    ,"ŒX‚« = 0.3    "), lty = c(2,3,1), col = c(4,4,4))
+legend(1.7, 0.3, legend = c("å‚¾ã = 0.23    ","å‚¾ã = 0.26"    ,"å‚¾ã = 0.3    "), lty = c(2,3,1), col = c(4,4,4))
 dev.copy2eps(file= figpath %+% "fk2.eps", family="Japan1GothicBBB")
 dev.copy2pdf(file= figpath %+% "fk2.pdf", family="Japan1GothicBBB")
 

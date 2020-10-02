@@ -4,14 +4,14 @@
 //   modified on 2020/01/02
 //=======================================
 
-// 1. “à¶•Ï”AŠO¶•Ï”‚ÌéŒ¾
+// 1. å†…ç”Ÿå¤‰æ•°ã€å¤–ç”Ÿå¤‰æ•°ã®å®£è¨€
 var c l k y w R a;
 varexo e;
 
-// 2. ƒpƒ‰ƒ[ƒ^‚ÌéŒ¾
+// 2. ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å®£è¨€
 parameters alpha beta delta mu gamma rho Rstar Kstar Ystar Cstar;
 
-// ƒpƒ‰ƒ[ƒ^’l‚Ì‘ã“ü
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å€¤ã®ä»£å…¥
 alpha = 0.3;
 beta = 0.99;
 delta = 0.025;
@@ -29,7 +29,7 @@ Kstar*k = Ystar*y(-1)+(1-delta)*Kstar*k(-1)-Cstar*c(-1);
 a = rho*a(-1) + e;
 end;
 
-// 4. ’èíó‘Ô‚ÌŒvZ
+// 4. å®šå¸¸çŠ¶æ…‹ã®è¨ˆç®—
 Astar = 1;
 rstar = 1/beta+delta-1;
 K_L = (rstar/alpha/Astar)^(1/(alpha-1));
@@ -42,17 +42,17 @@ Ystar = Y_L*Lstar;
 Cstar = C_L*Lstar;
 Rstar = rstar+1;
 
-// ‘S‚Äƒ[ƒ‚É‚È‚é‚±‚Æ‚ğ”O‚Ì‚½‚ßƒ`ƒFƒbƒN
+// å…¨ã¦ã‚¼ãƒ­ã«ãªã‚‹ã“ã¨ã‚’å¿µã®ãŸã‚ãƒã‚§ãƒƒã‚¯
 steady;
 
-// ƒ‚ƒfƒ‹‚Ìƒ`ƒFƒbƒN
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒã‚§ãƒƒã‚¯
 check;
 
-// 5. ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“(stochastic)
-// ƒVƒiƒŠƒI‚Ìİ’è
+// 5. ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³(stochastic)
+// ã‚·ãƒŠãƒªã‚ªã®è¨­å®š
 shocks;
 var e = 1;
 end;
 
-// ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ÌÀs
+// ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®å®Ÿè¡Œ
 stoch_simul(order=1, irf = 100) c l k y w R a;

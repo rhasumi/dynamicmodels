@@ -4,14 +4,14 @@
 //   modified on 2020/01/02
 //=======================================
 
-// 1. “à¶•Ï”AŠO¶•Ï”‚ÌéŒ¾
+// 1. å†…ç”Ÿå¤‰æ•°ã€å¤–ç”Ÿå¤‰æ•°ã®å®£è¨€
 var C phi ppi ppitil F D A ii v;
 varexo e z;
 
-// 2. ƒpƒ‰ƒ[ƒ^‚ÌéŒ¾
+// 2. ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å®£è¨€
 parameters beta mu gamma varrho eta phi_pi phi_y rho_A rho_v istar Cstar;
 
-// ƒpƒ‰ƒ[ƒ^’l‚Ì‘ã“ü
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å€¤ã®ä»£å…¥
 beta = 0.99;
 mu = 1.0;
 gamma = 5;
@@ -22,7 +22,7 @@ phi_y = 0.5;
 rho_A = 0.9;
 rho_v = 0.7;
 
-// 3. •û’ö®‚Ì’è‹`
+// 3. æ–¹ç¨‹å¼ã®å®šç¾©
 model;
 (1+ppi(+1))*C(+1)/C = beta*(1+ii);
 (1+ppitil)/(1+ppi) = eta/(eta-1)*F/D;
@@ -35,7 +35,7 @@ v = rho_v*v(-1) + z;
 phi - mu*(C/A)^(gamma+1)*(gamma+1) = 0;
 end;
 
-// 4. ’èíó‘Ô‚ÌŒvZ
+// 4. å®šå¸¸çŠ¶æ…‹ã®è¨ˆç®—
 pistar = 0;
 pitilstar = 0;
 vstar = 0;
@@ -60,19 +60,19 @@ end;
 
 steady;
 
-// ƒ‚ƒfƒ‹‚Ìƒ`ƒFƒbƒN
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒã‚§ãƒƒã‚¯
 check;
 
-// 5. ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“(deterministic)
-// ƒVƒiƒŠƒI‚Ìİ’è
+// 5. ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³(deterministic)
+// ã‚·ãƒŠãƒªã‚ªã®è¨­å®š
 shocks;
 var e; periods 1; values 0.01;
 end;
 
-// ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ÌÀs
+// ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®å®Ÿè¡Œ
 simul(periods=150);
 
-// ƒOƒ‰ƒt•`Ê‚È‚Ç
+// ã‚°ãƒ©ãƒ•æå†™ãªã©
 C1 = (C./Cstar-1)*100;
 i1 = (ii-istar)*100;
 pi1 = (ppi-pistar)*100;

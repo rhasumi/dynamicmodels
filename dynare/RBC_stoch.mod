@@ -3,14 +3,14 @@
 //   modified on 2020/01/02
 //=======================================
 
-// 1. “à¶•Ï”AŠO¶•Ï”‚ÌéŒ¾
+// 1. å†…ç”Ÿå¤‰æ•°ã€å¤–ç”Ÿå¤‰æ•°ã®å®£è¨€
 var C L K Y w R A;
 varexo e;
 
-// 2. ƒpƒ‰ƒ[ƒ^‚ÌéŒ¾
+// 2. ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å®£è¨€
 parameters alpha beta delta mu gamma rho;
 
-// ƒpƒ‰ƒ[ƒ^’l‚Ì‘ã“ü
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å€¤ã®ä»£å…¥
 alpha = 0.3;
 beta = 0.99;
 delta = 0.025;
@@ -18,7 +18,7 @@ mu = 1.0;
 gamma = 1.0;
 rho = 0.9;
 
-// 3. •û’ö®‚Ì’è‹`
+// 3. æ–¹ç¨‹å¼ã®å®šç¾©
 model;
 exp(w)/exp(C) = (gamma+1)*mu*exp(L)^gamma;
 exp(C(+1))/exp(C) = beta*(exp(R(+1))-delta);
@@ -29,7 +29,7 @@ exp(K) = exp(Y(-1))+(1-delta)*exp(K(-1))-exp(C(-1));
 A = rho*A(-1) + e;
 end;
 
-// 4. ’èíó‘Ô‚ÌŒvZ
+// 4. å®šå¸¸çŠ¶æ…‹ã®è¨ˆç®—
 Astar = 1;
 rstar = 1/beta + delta - 1;
 K_L = (rstar/alpha/Astar)^(1/(alpha-1));
@@ -41,7 +41,7 @@ Kstar = K_L*Lstar;
 Ystar = Y_L*Lstar;
 Cstar = C_L*Lstar;
 
-// Dynare‚É’èíó‘Ô‚ğŒvZ‚³‚¹‚éÛ‚Ì‰Šú’l
+// Dynareã«å®šå¸¸çŠ¶æ…‹ã‚’è¨ˆç®—ã•ã›ã‚‹éš›ã®åˆæœŸå€¤
 initval;
 C = log(Cstar);
 L = log(Lstar);
@@ -52,20 +52,20 @@ R = log(1+rstar);
 A = log(Astar);
 end;
 
-// Dynare‚É’èíó‘Ô‚ğŒvZ‚³‚¹‚é
+// Dynareã«å®šå¸¸çŠ¶æ…‹ã‚’è¨ˆç®—ã•ã›ã‚‹
 steady;
 
-// ‰Šú’l‚ÆŒ‹‰Ê‚ª•Ï‚í‚ç‚È‚¢‚±‚Æ‚ğƒ`ƒFƒbƒN
+// åˆæœŸå€¤ã¨çµæœãŒå¤‰ã‚ã‚‰ãªã„ã“ã¨ã‚’ãƒã‚§ãƒƒã‚¯
 [log(Cstar); log(Lstar); log(Kstar); log(Ystar); log(wstar); log(rstar+1); log(Astar)]
 
-// ƒ‚ƒfƒ‹‚Ìƒ`ƒFƒbƒN
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒã‚§ãƒƒã‚¯
 check;
 
-// 5. ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“(stochastic)
-// ƒVƒiƒŠƒI‚Ìİ’è
+// 5. ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³(stochastic)
+// ã‚·ãƒŠãƒªã‚ªã®è¨­å®š
 shocks;
 var e = 1;
 end;
 
-// ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚ÌÀs
+// ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã®å®Ÿè¡Œ
 stoch_simul(order=1, irf = 100) C L K Y w R A;
