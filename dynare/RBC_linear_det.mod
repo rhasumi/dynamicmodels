@@ -1,11 +1,11 @@
 //=======================================
 // Chapter 4, RBC model, 
 //     linearized, deterministic solution
-//   modified on 2020/01/02
+//   modified on 2021/03/03
 //=======================================
 
 // 1. 内生変数、外生変数の宣言
-var c l k y w R a;
+var C L K Y w R A;
 varexo e;
 
 // 2. パラメータの宣言
@@ -20,13 +20,13 @@ gamma = 1.0;
 rho = 0.9;
 
 model;
-w-c = gamma*l;
-c(+1)-c = beta*Rstar*R(+1);
-y = a + alpha*k + (1-alpha)*l;
-w = a + alpha*k - alpha*l;
-Rstar/(Rstar-1)*R = a + (alpha-1)*k + (1-alpha)*l;
-Kstar*k = Ystar*y(-1)+(1-delta)*Kstar*k(-1)-Cstar*c(-1);
-a = rho*a(-1) + e;
+w-C = gamma*L;
+C(+1)-C = beta*Rstar*R(+1);
+Y = A + alpha*K + (1-alpha)*L;
+w = A + alpha*K - alpha*L;
+Rstar/(Rstar-1)*R = A + (alpha-1)*K + (1-alpha)*L;
+Kstar*K = Ystar*Y(-1)+(1-delta)*Kstar*K(-1)-Cstar*C(-1);
+A = rho*A(-1) + e;
 end;
 
 // 4. 定常状態の計算
@@ -59,32 +59,25 @@ end;
 // シミュレーションの実行
 simul(periods=150);
 
-// 定常状態からの乖離率の計算
-C1 = (C./Cstar-1)*100;
-L1 = (L./Lstar-1)*100;
-K1 = (K./Kstar-1)*100;
-Y1 = (Y./Ystar-1)*100;
-w1 = (w./wstar-1)*100;
-r1 = (r-rstar)*100;
-A1 = (A./Astar-1)*100;
-I1 = ((Y-C)./(Ystar-Cstar)-1)*100;
+I = (Y*Ystar-C*Cstar)./(Ystar-Cstar);
 
 // グラフ描写
-figure(1)
+figure(3)
 subplot(2,2,1)
-plot(0:50, A1(1:51)); title('A')
+plot(0:50, A(1:51)*100); title('A')
 subplot(2,2,2)
-plot(0:50, Y1(1:51)); title('Y')
+plot(0:50, Y(1:51)*100); title('Y')
 subplot(2,2,3)
-plot(0:50, C1(1:51)); title('C')
+plot(0:50, C(1:51)*100); title('C')
 subplot(2,2,4)
+plot(0:50, K(1:51)*100); title('K')
 
-figure(2)
+figure(4)
 subplot(2,2,1)
-plot(0:50, L1(1:51)); title('L')
+plot(0:50, L(1:51)*100); title('L')
 subplot(2,2,2)
-plot(0:50, I1(1:51)); title('I')
+plot(0:50, I(1:51)*100); title('I')
 subplot(2,2,3)
-plot(0:50, w1(1:51)); title('w')
+plot(0:50, w(1:51)*100); title('w')
 subplot(2,2,4)
-plot(0:50, r1(1:51)); title('r')
+plot(0:50, R(1:51)*100); title('r')
