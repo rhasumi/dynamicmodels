@@ -70,7 +70,9 @@ values 0.01;
 end;
 
 // シミュレーションの実行
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 // 定常状態からの乖離率の計算
 C1 = (C./Cstar-1)*100;

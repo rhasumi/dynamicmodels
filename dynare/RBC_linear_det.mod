@@ -57,7 +57,9 @@ values 0.01;
 end;
 
 // シミュレーションの実行
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 I = (Y*Ystar-C*Cstar)./(Ystar-Cstar);
 

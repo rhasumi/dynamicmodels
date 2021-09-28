@@ -41,7 +41,9 @@ shocks;
 var e; periods 1; values 0.01;
 end;
 
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 figure(1)
 subplot(3,2,1)
@@ -60,7 +62,9 @@ var e; periods 1; values 0;
 var z; periods 1; values 0.01;
 end;
 
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 figure(2)
 subplot(3,2,1)

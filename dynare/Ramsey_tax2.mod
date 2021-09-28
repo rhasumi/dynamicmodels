@@ -52,7 +52,9 @@ shocks;
 var tauk; periods 1:9; values 0;
 end;
 
-simul(periods=31);
+//simul(periods=31);
+perfect_foresight_setup(periods=31);
+perfect_foresight_solver;
 
 // グラフ描写
 figure(2)

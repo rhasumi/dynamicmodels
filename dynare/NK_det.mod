@@ -70,7 +70,9 @@ var e; periods 1; values 0.01;
 end;
 
 // シミュレーションの実行
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 // グラフ描写など
 C1 = (C./Cstar-1)*100;
@@ -99,7 +101,9 @@ var e; periods 1; values 0;
 var z; periods 1; values 0.01;
 end;
 
-simul(periods=150);
+//simul(periods=150);
+perfect_foresight_setup(periods=150);
+perfect_foresight_solver;
 
 C2 = (C./Cstar-1)*100;
 i2 = (ii-istar)*100;
