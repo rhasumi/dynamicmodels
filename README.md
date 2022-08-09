@@ -2,4 +2,4 @@
 
 作成者：蓮見 亮
 
-サポートページはこちら（https://rhasumi.github.io/pages/dynamicmodels/)
+サポートページは[こちら](https://rhasumi.github.io/pages/dynamicmodels/)（https://rhasumi.github.io/pages/dynamicmodels/)
