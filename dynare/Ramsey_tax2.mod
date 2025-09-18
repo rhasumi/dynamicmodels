@@ -55,6 +55,9 @@ end;
 //simul(periods=31);
 perfect_foresight_setup(periods=31);
 perfect_foresight_solver;
+for i = 1:size(M_.endo_names, 1)
+  assignin('base', string(M_.endo_names(i)), oo_.endo_simul(i,:)');
+end
 
 // グラフ描写
 figure(2)

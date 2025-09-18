@@ -1,6 +1,6 @@
 //=======================================
 // Chapter 4, RBC model, deterministic solution
-//   modified on 2020/01/02
+//   modified on 2025/09/18
 //=======================================
 
 // 1. 内生変数、外生変数の宣言
@@ -75,6 +75,9 @@ perfect_foresight_setup(periods=150);
 perfect_foresight_solver;
 
 // 定常状態からの乖離率の計算
+for i = 1:size(M_.endo_names, 1)
+  assignin('base', string(M_.endo_names(i)), oo_.endo_simul(i,:)');
+end
 C1 = (C./Cstar-1)*100;
 L1 = (L./Lstar-1)*100;
 K1 = (K./Kstar-1)*100;

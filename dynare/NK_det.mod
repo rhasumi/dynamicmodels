@@ -75,6 +75,9 @@ perfect_foresight_setup(periods=150);
 perfect_foresight_solver;
 
 // グラフ描写など
+for i = 1:size(M_.endo_names, 1)
+  assignin('base', string(M_.endo_names(i)), oo_.endo_simul(i,:)');
+end
 C1 = (C./Cstar-1)*100;
 i1 = (ii-istar)*100;
 pi1 = (ppi-pistar)*100;
@@ -104,6 +107,9 @@ end;
 //simul(periods=150);
 perfect_foresight_setup(periods=150);
 perfect_foresight_solver;
+for i = 1:size(M_.endo_names, 1)
+  assignin('base', string(M_.endo_names(i)), oo_.endo_simul(i,:)');
+end
 
 C2 = (C./Cstar-1)*100;
 i2 = (ii-istar)*100;

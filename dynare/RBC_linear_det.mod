@@ -60,6 +60,9 @@ end;
 //simul(periods=150);
 perfect_foresight_setup(periods=150);
 perfect_foresight_solver;
+for i = 1:size(M_.endo_names, 1)
+  assignin('base', string(M_.endo_names(i)), oo_.endo_simul(i,:)');
+end
 
 I = (Y*Ystar-C*Cstar)./(Ystar-Cstar);
 
